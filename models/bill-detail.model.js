@@ -8,6 +8,7 @@ var BillDetailSchema = new Schema(
             type: Number,
             default: 1
         },
+        price: Number,
         idProduct: {
             type: ObjectId,
             ref: 'products'
