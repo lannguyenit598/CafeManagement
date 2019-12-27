@@ -23,6 +23,8 @@ router.get('/product-detail', productController.detail);
 // router.get('/create', adminProductController.createData);
 
 router.get('/import-product', importProductController.list);
+router.put('/import-product', importProductController.importProduct);
+router.put('/export-product', importProductController.exportProduct);
 
 module.exports = router;
 
