@@ -4,12 +4,12 @@ const ObjectId = require("mongodb").ObjectID;
 const Origin = require('../../models/origin.model')
 const TypeProduct = require('../../models/type-product.model')
 
+exports.detail = (req, res, next) => {
+    res.render('admin/pages/product-detail', { title: 'Chi tiết đơn hàng'});
+}
 
-
-exports.get = async (req, res, next) => {
-    const products = await Product.find();
-
-    res.render('admin/main/product', { title: 'Quản lý sản phẩm', products });
+exports.list = (req, res, next) => {
+    res.render('admin/pages/product', { title: 'Quản lý sản phẩm', payload: [] });
     // res.render('admin/auth/login', { title: 'Trang chủ' });
 }
 
