@@ -14,4 +14,4 @@ var CustomerSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Origin', CustomerSchema);
+module.exports = mongoose.model('Customer', CustomerSchema);

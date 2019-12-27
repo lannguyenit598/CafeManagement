@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var ObjectId = require("mongodb").ObjectID;
 var Schema = mongoose.Schema;
 
 var ProductSchema = new Schema(
@@ -12,11 +13,20 @@ var ProductSchema = new Schema(
             type: Number,
             default: 0
         },
-        description: String
+        description: String,
+        idTypeProduct: {
+            type: ObjectId,
+            ref: 'TypeProducts'
+        },
+        idOrigin: {
+            type: ObjectId,
+            ref: 'Origin'
+        },
+        img: String
     },
     {
         timestamps: true
     }
 );
 
-module.exports = mongoose.model('Origin', ProductSchema);
+module.exports = mongoose.model('Product', ProductSchema);

@@ -1,0 +1,13 @@
+<div>Sản phẩm</div>
+
+
+<% for(let i=0; i<payload; i++) {%>
+<tr>
+    <td>
+        <%= payload[i].name %>
+    </td>
+    <td>
+        <%= payload[i].description %>
+    </td>
+</tr>
+<% } %>

@@ -26,4 +26,4 @@ var BillSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Origin', BillSchema);
+module.exports = mongoose.model('Bill', BillSchema);
