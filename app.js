@@ -1,9 +1,16 @@
 import createError from "http-errors"
 import configViewEngine from "./config/viewEngine"
+// const createError = require('http-errors')
+// const configViewEngine = require('./config/viewEngine')
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const config = require('./config/db.config');
+var mongoose = require('mongoose');
+
+
 
 var indexRouter = require('./routes/index');
 
@@ -20,6 +27,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true }, (err, res) => {
+  if (!err) {
+    console.log('Connect to databse successfully!');
+  }
+});
 
 
 
