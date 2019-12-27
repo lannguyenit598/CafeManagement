@@ -1,7 +1,5 @@
 import createError from "http-errors"
 import configViewEngine from "./config/viewEngine"
-// const createError = require('http-errors')
-// const configViewEngine = require('./config/viewEngine')
 
 var express = require('express');
 var path = require('path');
