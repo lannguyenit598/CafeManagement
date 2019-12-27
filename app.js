@@ -13,7 +13,8 @@ const router = require("express").Router();
 router.use(expressLayouts)
 
 var indexRouter = require('./routes/index');
-const adminRouter = require('./routes/admin')
+const adminRouter = require('./routes/admin');
+const staffRouter = require('./routes/staff');
 var app = express();
 
 // view engine setup
@@ -35,6 +36,7 @@ mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: t
 
 
 app.use('/home', indexRouter);
+app.use('/home-staff', staffRouter);
 app.use(expressLayouts);
 app.set("layout", "admin/layout");
 app.use('/', adminRouter);
