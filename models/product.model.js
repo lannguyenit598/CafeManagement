@@ -16,7 +16,7 @@ var ProductSchema = new Schema(
         description: String,
         idTypeProduct: {
             type: ObjectId,
-            ref: 'TypeProducts'
+            ref: 'TypeProduct'
         },
         idOrigin: {
             type: ObjectId,

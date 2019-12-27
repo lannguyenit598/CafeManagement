@@ -1,0 +1,29 @@
+
+
+.product-detail__img {
+    margin: 0px auto 50px;
+}
+
+.product-detail__img  img{
+    border-radius: 20px;
+    
+        max-width: 400px;
+        max-height: 400px;
+    
+}
+.product-detail__card-info {
+    display: flex;
+    justify-content: space-between;
+}
+.product-detail-card {
+    padding: auto 10px;
+}
+
+
+
+
+
+.import-product-btn {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
