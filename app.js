@@ -11,6 +11,7 @@ var mongoose = require('mongoose');
 
 
 var indexRouter = require('./routes/index');
+const adminRouter = require('./routes/admin')
 
 var app = express();
 
@@ -34,6 +35,7 @@ mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: t
 
 
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 
 
 
