@@ -10,9 +10,12 @@ var mongoose = require('mongoose');
 
 
 
+const expressLayouts = require("express-ejs-layouts");
+const router = require("express").Router();
+router.use(expressLayouts)
+
 var indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin')
-
 var app = express();
 
 // view engine setup
