@@ -8,8 +8,6 @@ var logger = require('morgan');
 const config = require('./config/db.config');
 var mongoose = require('mongoose');
 
-
-
 const expressLayouts = require("express-ejs-layouts");
 const router = require("express").Router();
 router.use(expressLayouts)
@@ -36,12 +34,10 @@ mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: t
 });
 
 
-
-app.use('/', indexRouter);
-app.use('/admin', adminRouter);
-
-
-
+app.use('/home', indexRouter);
+app.use(expressLayouts);
+app.set("layout", "admin/layout");
+app.use('/', adminRouter);
 
 
 // catch 404 and forward to error handler
