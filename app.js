@@ -8,10 +8,12 @@ var logger = require('morgan');
 const config = require('./config/db.config');
 var mongoose = require('mongoose');
 
+const expressLayouts = require("express-ejs-layouts");
+const router = require("express").Router();
+router.use(expressLayouts)
+
 var indexRouter = require('./routes/index');
 const adminRouter = require('./routes/admin')
-const expressLayouts = require("express-ejs-layouts");
-
 var app = express();
 
 // view engine setup

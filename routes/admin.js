@@ -17,8 +17,10 @@ router.get('/staff-detail', staffController.detail);
 
 router.get('/statistic', statisticController.list);
 
+//product
 router.get('/product', productController.list);
 router.get('/product-detail', productController.detail);
+// router.get('/create', adminProductController.createData);
 
 router.get('/import-product', importProductController.list);
 
