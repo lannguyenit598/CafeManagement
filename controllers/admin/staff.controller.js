@@ -3,5 +3,6 @@ exports.list = (req, res, next) => {
 }
 
 exports.detail = (req, res, next) => {
-    res.render('admin/pages/staff-detail', { title: 'Chi tiết nhân viên'});
+    const { id } = req.query
+    res.render('admin/pages/staff-detail', { title: 'Chi tiết nhân viên', id});
 }
