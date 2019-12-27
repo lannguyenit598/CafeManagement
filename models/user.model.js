@@ -22,4 +22,4 @@ var BillDetailSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Origin', BillDetailSchema);
+module.exports = mongoose.model('User', BillDetailSchema);

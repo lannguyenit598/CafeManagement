@@ -23,4 +23,4 @@ var PromotionSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('Origin', PromotionSchema);
+module.exports = mongoose.model('Promotion', PromotionSchema);
