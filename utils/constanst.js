@@ -1,0 +1,4 @@
+const MAX_WAREHOUSE_QUANTITY = 1000 // kg
+
+
+export {MAX_WAREHOUSE_QUANTITY}

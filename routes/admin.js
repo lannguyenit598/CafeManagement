@@ -8,7 +8,7 @@ router.get('/', adminDashboardController.home);
 
 
 // product
-router.get('/product', adminProductController.product);
+router.get('/product', adminProductController.get);
 // router.get('/create', adminProductController.createData);
 
 

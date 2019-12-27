@@ -1,13 +1,16 @@
+
+
+
 <div>Sản phẩm</div>
 
 
-<% for(let i=0; i<payload; i++) {%>
+<% for(let i=0; i<products.length; i++) {%>
 <tr>
     <td>
-        <%= payload[i].name %>
+        <%= products[i].name %>
     </td>
     <td>
-        <%= payload[i].description %>
+        <%= products[i].description %>
     </td>
 </tr>
 <% } %>
