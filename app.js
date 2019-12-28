@@ -28,7 +28,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true }, (err, res) => {
+mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true,}, (err, res) => {
   if (!err) {
     console.log('Connect to databse successfully!');
   }

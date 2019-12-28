@@ -19,7 +19,7 @@ var BillSchema = new Schema(
         idCustomer: {
             type: ObjectId,
             ref: 'customers'
-        }
+        },
     }, 
     {
         timestamps: true

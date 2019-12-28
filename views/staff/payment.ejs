@@ -41,7 +41,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="menu-content pb-60 col-lg-10">
                     <div class="title text-center">
-                        <h1 class="mb-10">Danh sách sản phẩm</h1>
+                        <h1 class="mt-4">Bán hàng</h1>
                     </div>
                 </div>
             </div>
@@ -54,22 +54,23 @@
             <div class="row">
                 <!-- Search -->
                 <div class="col-lg-5 col-md-5 ml-3 mb-5">
-                    <form class="d-none d-sm-inline-block form-inline w-100">
+                    <div class="d-none d-sm-inline-block form-inline w-100">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input id="search" type="text" class="form-control bg-light border-0 small"
+                                style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;"
+                                placeholder="Nhập tên sản phẩm..." aria-label="Search" aria-describedby="basic-addon2">
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button id="btn-search" class="btn btn-primary" type="button" onclick="handleSearch()">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6">
-                    <% data.map(item => {%>
+                <div class="col-lg-6 col-md-6" id="products">
+                    <% products.map(item => {%>
                     <div class="single-blog">
                         <div class="single-menu">
                             <img class="img-fluid" src="<%=item.img%>" alt="">
@@ -77,7 +78,7 @@
                                 <div class="title-div justify-content-between d-flex">
                                     <h4><%= item.name%></h4>
                                     <p class="price float-right">
-                                        <%= item.price%>VND
+                                        <%= item.price%>
                                     </p>
                                 </div>
                                 <p>
@@ -85,7 +86,7 @@
                                 </p>
                                 <ul class="post-tags">
                                     <li><button id="order-product"
-                                            onclick="orderProduct('<%=JSON.stringify(item)%>');">Đặt
+                                            onclick="orderProduct({_id: '<%=item._id%>', name: '<%=item.name%>',price: '<%=item.price%>', typeName :'<%=item.idTypeProduct.name%>' });">Đặt
                                             hàng</button></li>
                                 </ul>
                             </div>
@@ -100,7 +101,11 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table id="table-payment" class="table table-bordered" width="100%" cellspacing="0">
+                                <table id="table-product" class="table table-bordered" width="100%" cellspacing="0">
+                                    <button style="margin-left: 80%; font-size: 10px; margin-bottom: 10px;"
+                                        onclick="handleDeleteData()" class="btn btn-primary ">
+                                        <i class="fas fa-trash-alt"></i>
+                                        Xóa dữ liệu</button>
                                     <thead>
                                         <tr>
                                             <th>Tên sản phẩm</th>
@@ -112,14 +117,121 @@
                                     <tbody></tbody>
                                 </table>
                             </div>
-                            <button class="btn btn-primary btn-payment" onclick="handlePayment()">Tiến hành thanh
-                                toán</button>
+                            <button data-toggle="modal" data-target="#modal-payment" onclick="handlePayment()"
+                                class="btn btn-primary btn-payment">
+                                <i class="fas fa-shopping-cart"></i>
+                                Tiến hành thanh toán</button>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
+    <!-- payment modal-->
+    <div class="modal fade" id="modal-payment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thanh toán</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="info-bill">
+                        <table id="table-payment" class="table table-bordered" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Giá</th>
+                                    <th>Loại</th>
+                                    <th style="width: 100px;">Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="row info-customer w-100 mt-3">
+                        <div class="col-lg-7 col-md-7">
+                            <div>
+                                <h6 class="mb-3">Nhập số điện thoại khách hàng</h6>
+                                <div class="form-group input-group" style="margin-bottom: 0;">
+                                    <input type="text" placeholder="Nhập số điện thoại" aria-label="Số điện thoại"
+                                        id='tel-customer-search' class="form-control bg-light border-0 small"
+                                        style="border-top-left-radius: 20px; border-bottom-left-radius: 20px;"
+                                        aria-describedby="basic-addon2">
+                                    <div class="input-group-append">
+                                        <button id="btn-tel-search" class="btn btn-primary" type="button"
+                                            onclick="handleTelSearch()">
+                                            <i class="fas fa-search fa-sm"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <span
+                                    style="color: red; font-size: 12px; font-style: initial;padding: 10px; line-height: 2;"
+                                    class="message-err-tel"></span>
+                            </div>
+                            <h6 class="mb-3 title-customer">Tạo thành viên</h6>
+                            <div class="form-group input-group" style="margin-bottom: 0;">
+                                <input type="tel" pattern="\d{10}|\d{9}|\d{11}" class="form-control"
+                                    placeholder="Số điện thoại" aria-label="Số điện thoại" id='tel-customer'>
+                            </div>
+                            <span style="color: red; margin-left: 10px; font-size: 12px; font-style: initial;"
+                                class="message-err-tel-create"></span>
+                            <div class="form-group input-group ">
+                                <input type="text" class="form-control" placeholder="Tên khách hàng"
+                                    aria-label="Tên khách hàng" id='name-customer'>
+                            </div>
+                            <div class="form-group input-group ">
+                                <input type="email" class="form-control" placeholder="Email" aria-label="Email"
+                                    id='email-customer'>
+                            </div>
+                            <div class="form-group input-group ">
+                                <input type="number" class="form-control" placeholder="Điểm" aria-label="score"
+                                    id='score-customer' disabled style="display: none;">
+                            </div>
+                        </div>
+                        <div class="col-lg-5 col-md-5">
+                            <h5>Tổng tiền</h5>
+                            <span id="total" class="tag-number">0 VND</span>
+                            <h5>Khuyến mãi</h5>
+                            <span id="promotion" class="tag-number">50%</span>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <button id="btn-close" class="btn " type="button" data-dismiss="modal">Đóng</button>
+                        <button id="btn-pay" type="submit" class="btn" onclick="handleBtnPayModal()">Thanh
+                            toán</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal notification err/ success -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+        id="inforModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thông báo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="info-modal-message">Thành công</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="js/vendor/jquery-2.2.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
@@ -158,33 +270,242 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
     <!-- handle javascript -->
     <script type="text/javascript">
-        const orderProduct = (item) => {
-            let product = JSON.parse(item)
-            if (document.getElementById(product.id)) {
-                const id = document.getElementById(product.id).value++;
+
+        $(document).ready(() => {
+            $('.price').get().map(item => {
+                item.innerHTML = handleCurrency(item.innerText) + " VND"
+            })
+        })
+
+        $('#modal-payment').on('hidden.bs.modal', function (e) {
+            $("#table-payment").find('tbody').find('tr').remove();
+        });
+
+        const checkPhoneNumber = (string) => {
+            return string.match(/\d/g) ? string.match(/\d/g).length >= 10 || string.match(/\d/g).length <= 11 : false;
+        }
+
+        //handle enter button search
+        const input = document.getElementById("search");
+        input.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("btn-search").click();
+            }
+        });
+
+        //handle enter button search customer by phone
+        const inputTel = document.getElementById("tel-customer-search");
+        inputTel.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                document.getElementById("btn-tel-search").click();
+            }
+        });
+
+        // delele data table 
+        const handleDeleteData = () => {
+            $("#table-product").find('tbody').find('tr').remove();
+            document.getElementById('name-customer').value = '';
+            document.getElementById('tel-customer').value = '';
+            document.getElementById('email-customer').value = '';
+            document.getElementById('total').innerHTML = 0 + ' VND';
+        }
+
+        //parse string to VND
+        const handleCurrency = (number) => {
+            return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        //parse VND to string
+        const parseCurrency = (string) => {
+            return parseFloat(string.replace(',', ''))
+        }
+
+        //handle button order product
+        const orderProduct = ({ _id, name, price, typeName }) => {
+            // let product = JSON.parse(item)
+            if (document.getElementById(_id)) {
+                document.getElementById(_id).value++;
             }
             else {
-                $("#table-payment").find('tbody').append(`
-                <tr >
-                <td>${product.name}</td>
-                <td>${product.price}</td>
-                <td>loại</td>
-                <td><input id=${product.id} type="number" name="number" value="1" style="width: 50px;"/></td></tr>`);
+                $("#table-product").find('tbody').append(`
+                <tr>
+                <td>${name}</td>
+                <td>${handleCurrency(price)}</td>
+                <td>${typeName}</td>
+                <td><input id=${_id} type="number" name="number" value="1" style="width: 50px;"/></td>
+                <td style="display: none;">${_id}</td></tr>`);
             }
         }
+
+        //handle button payment
         const handlePayment = () => {
-            const obj = $('#table-payment tbody tr').map(function () {
+
+            let total = 0;
+            const obj = $('#table-product tbody tr').map(function () {
+
+                const $row = $(this);
+
+                total += (parseCurrency($row.find(':nth-child(2)').text()) * $row.find(":nth-child(4) input[type='number']").val())
+                if ($row.find(":nth-child(4) input[type='number']").val() > 0) {
+                    $("#table-payment").find('tbody').append(`
+                <tr >
+                <td>${$row.find(':nth-child(1)').text()}</td>
+                <td>${$row.find(':nth-child(2)').text()}</td>
+                <td>${$row.find(':nth-child(3)').text()}</td>
+                <td>${$row.find(":nth-child(4) input[type='number']").val()}</td></tr>`)
+                }
+            });
+            if (total <= 0) {
+                document.getElementById('btn-pay').setAttribute("disabled", "disabled");
+            }
+            else {
+                document.getElementById("total").innerHTML = handleCurrency(total) + " VND"
+                document.getElementById('btn-pay').removeAttribute("disabled");
+            }
+        }
+
+        //handle button payment on modal
+        const handleBtnPayModal = () => {
+            const inforModal = $('#inforModal');
+            const modal = $('#modal-payment');
+
+            const obj = $('#table-product tbody tr').map(function () {
                 const $row = $(this);
                 return {
-                    name: $row.find(':nth-child(1)').text(),
-                    price: $row.find(':nth-child(2)').text(),
-                    type: $row.find(':nth-child(3)').text(),
-                    quantity: $row.find(":nth-child(4) input[type='number']").val()
-                }});
-            console.log(obj.get())
+                    price: parseCurrency($row.find(':nth-child(2)').text()),
+                    quantity: $row.find(":nth-child(4) input[type='number']").val(),
+                    _id: $row.find(':nth-child(5)').text(),
+                }
+            });
+
+            if (document.getElementById('tel-customer').value) {
+                if (!checkPhoneNumber(document.getElementById('tel-customer').value)) {
+                    document.getElementsByClassName('message-err-tel-create')[0].innerText = "Số điện thoại sai định dạng."
+                    return;
+                }
+                else {
+                    document.getElementsByClassName('message-err-tel-create')[0].innerText = ""
+                }
+            }
+
+            const customer = {
+                name: document.getElementById('name-customer').value,
+                phone: document.getElementById('tel-customer').value,
+                email: document.getElementById('email-customer').value,
+            }
+
+            const total = parseCurrency(document.getElementById('total').innerText)
+
+            $.ajax({
+                url: "/home-staff",
+                type: "POST",
+                data: JSON.stringify({ products: obj.get(), customer, total }),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            })
+                .done(function (result) {
+                    const { isSuccess, message } = result;
+                    // modal.find('[name=info-modal-message]').val(message);
+                    document.getElementById('info-modal-message').innerHTML = message;
+                    handleDeleteData();
+                    modal.modal('hide');
+                    inforModal.modal('show');
+
+                })
+                .fail(function (result) {
+                    const { message } = JSON.parse(result.responseText)
+                    document.getElementById('info-modal-message').innerHTML = message;
+                    //  modal.find('[name=info-modal-message]').val(message);
+                    modal.modal('hide');
+                    inforModal.modal('show');
+                })
         }
+
+        //hanlde button search
+        const handleSearch = () => {
+            const text = document.getElementById('search').value;
+
+            $.ajax({
+                url: `/home-staff/get-product?text=${text}`,
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done(function (result) {
+                const { products } = result
+                var html = '';
+                if (products.length === 0) {
+                    html = '<span style="color: #b68834; font-style: initial; margin-left: 15px;">Không tìm thấy sản phẩm</span>';
+                }
+                else {
+                    products.map(item => {
+                        html +=
+                            `<div class="single-blog"><div class="single-menu">` +
+                            `<img class="img-fluid" src="${item.img}" alt=""> ` +
+                            `<div class="div-content"><div class="title-div justify-content-between d-flex">` +
+                            `<h4>${item.name}</h4><p class="price float-right"> ${handleCurrency(item.price)} VND</p>` +
+                            `</div> <p>${item.description}</p><ul class="post-tags">` +
+                            `<li><button id="order-product" onclick="orderProduct({_id: '${item._id}', name: '${item.name}', price: '${item.price}', typeName: '${item.idTypeProduct.name}'})">Đặt hàng</button>` +
+                            `</li></ul></div></div></div>`;
+                    })
+                }
+                $('#products').html(html);
+            })
+                .fail(function (result) {
+                    $("#products").html("<div><h3>Không tìm thấy sản phẩm</h3></div>")
+                    $("#products").find('.single-blog').remove();
+                })
+        }
+
+        //handle search customer by phone
+        const handleTelSearch = () => {
+            const phone = document.getElementById('tel-customer-search').value;
+            if (phone === null || phone.length === 0) {
+                document.getElementsByClassName('message-err-tel')[0].innerText = "Vui lòng nhập số điện thoại"
+            }
+            else {
+                if (!checkPhoneNumber(phone))
+                    document.getElementsByClassName('message-err-tel')[0].innerText = "Số điện thoại sai định dạng."
+                else {
+                    document.getElementsByClassName('message-err-tel')[0].innerText = "";
+
+                    $.ajax({
+                        url: `/home-staff/customer?phone=${phone}`,
+                        type: "GET",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json"
+                    })
+                        .done(function (result) {
+                            const { customer } = result
+                            if (customer.length === 0) {
+                                document.getElementsByClassName('title-customer')[0].innerText = "Tạo thành viên"
+                                document.getElementsByClassName('message-err-tel')[0].innerText = "Không tìm thấy số điện thoại"
+                            }
+                            else {
+                                console.log(customer)
+                                document.getElementsByClassName('title-customer')[0].innerText = "Thông tin thành viên"
+                                document.getElementById('score-customer').style.display = "block"
+                                document.getElementById('name-customer').value = customer[0].name;
+                                document.getElementById('tel-customer').value = customer[0].phone;
+                                document.getElementById('email-customer').value = customer[0].email;
+                                document.getElementById('score-customer').value = customer[0].score;
+                            }
+                        })
+                        .fail(function (result) {
+                            const { message } = JSON.parse(result.responseText)
+                            document.getElementsByClassName('create-customer')[0].style.display = 'block'
+                            document.getElementsByClassName('info-customer-search')[0].style.display = 'none'
+                            document.getElementsByClassName('message-err-tel')[0].innerText = message
+                        })
+                }
+            }
+
+        }
+
     </script>
 </body>
 
