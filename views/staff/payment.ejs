@@ -39,11 +39,11 @@
     <section>
         <div class="container">
             <div class="row d-flex justify-content-center">
-                <div class="menu-content pb-60 col-lg-10">
-                    <div class="title text-center">
-                        <h1 class="mt-4">Bán hàng</h1>
-                    </div>
+
+                <div class="title text-center">
+                    <h1 class="mt-4">Bán hàng</h1>
                 </div>
+
             </div>
         </div>
     </section>
@@ -53,7 +53,7 @@
         <div class="container-fluid">
             <div class="row">
                 <!-- Search -->
-                <div class="col-lg-5 col-md-5 ml-3 mb-5">
+                <div class="col-lg-5 col-md-5 ml-3 mb-3">
                     <div class="d-none d-sm-inline-block form-inline w-100">
                         <div class="input-group">
                             <input id="search" type="text" class="form-control bg-light border-0 small"
@@ -68,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row content">
                 <div class="col-lg-6 col-md-6" id="products">
                     <% products.map(item => {%>
                     <div class="single-blog">
@@ -76,7 +76,7 @@
                             <img class="img-fluid" src="<%=item.img%>" alt="">
                             <div class="div-content">
                                 <div class="title-div justify-content-between d-flex">
-                                    <h4><%= item.name%></h4>
+                                    <h5><%= item.name%></h5>
                                     <p class="price float-right">
                                         <%= item.price%>
                                     </p>
@@ -95,7 +95,7 @@
                     <%})%>
                 </div>
                 <div class="col-lg-6 col-md-6">
-                    <div class="card shadow mb-4">
+                    <div class="card shadow mb-4" style="margin-top: 10px;">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Thanh toán</h6>
                         </div>
