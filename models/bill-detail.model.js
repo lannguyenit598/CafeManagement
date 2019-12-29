@@ -11,11 +11,11 @@ var BillDetailSchema = new Schema(
         price: Number,
         idProduct: {
             type: ObjectId,
-            ref: 'products'
+            ref: 'Product'
         },
         idBill: {
             type: ObjectId,
-            ref: 'bills'
+            ref: 'Bill'
         }
     }, 
     {

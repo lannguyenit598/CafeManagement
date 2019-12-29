@@ -1,0 +1,19 @@
+.bills-detail__card-info {
+    display: flex;
+    justify-content: space-between;
+}
+.bills-detail-card {
+    padding: auto 10px;
+}
+
+.info-customer {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-customer div {
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    width: 180px;
+}

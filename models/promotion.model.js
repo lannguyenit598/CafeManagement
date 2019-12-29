@@ -8,7 +8,7 @@ var PromotionSchema = new Schema(
         idProductApplied: [
             {
                 type: ObjectId,
-                ref: 'Products'
+                ref: 'Product'
             }
         ],
         discount: {
