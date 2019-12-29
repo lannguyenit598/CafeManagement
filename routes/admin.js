@@ -11,6 +11,7 @@ import importProductController from "../controllers/admin/import-product.control
 router.get('/', adminDashboardController.home);
 
 router.get('/bill', billController.list);
+router.get('/bill-detail', billController.detail);
 
 router.get('/staff', staffController.list);
 router.get('/staff-detail', staffController.detail);

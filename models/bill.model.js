@@ -14,11 +14,11 @@ var BillSchema = new Schema(
         },
         idPromotion: {
             type: ObjectId,
-            ref: 'Promotions'
+            ref: 'Promotion'
         },
         idCustomer: {
             type: ObjectId,
-            ref: 'customers'
+            ref: 'Customer'
         },
     }, 
     {

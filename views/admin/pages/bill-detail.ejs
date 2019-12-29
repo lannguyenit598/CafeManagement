@@ -1,0 +1,145 @@
+<link href="css/bills-detail.css" rel="stylesheet">
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Chi tiết
+    đơn hàng</h1>
+
+  <div class="card-body">
+    <div class="bills-detail__card-info">
+
+
+      <!-- Infomation customer Card  -->
+      <div class="col-xl-4 col-md-6 mb-4 product-detail-card">
+        <div class="card border-left-info shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Thông tin khách hàng</div>
+                <div class="mb-0 font-weight-bold text-gray-800 info-customer">
+                  <% if(bills[0].idBill.idCustomer) { %>
+                  <div>Điện thoại: <%= bills[0].idBill.idCustomer.phone %></div>
+                  <div>Tên khách hàng:
+                    <% if(bills[0].idBill.idCustomer.name) {%>
+                    <%= bills[0].idBill.idCustomer.name %>
+                    <%} else {%> <span style="font-style: initial;">Chưa cập nhật</span> <%}%> 
+                  </div>
+                  <div>Email:    
+                    <% if(bills[0].idBill.idCustomer.email) {%>
+                    <%= bills[0].idBill.idCustomer.email %>
+                    <%} else {%> <span style="font-style: initial;">Chưa cập nhật</span> <%}%> 
+                  </div>
+                  <div>Điểm: <%= bills[0].idBill.idCustomer.score %></div>
+                  <% } else {%>
+                  <span style="font-style: initial;">Chưa cập nhật</span>
+                  <%}%>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-mug-hot fa-2x text-gray-300"></i>
+                <!-- <i class="fas fa-clipboard-list fa-2x text-gray-300"></i> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+
+      <!-- Price Card  -->
+      <div class="col-xl-4 col-md-6 mb-4 product-detail-card">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng giá đơn hàng</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800 total"><%= bills[0].idBill.total%>VND
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Date Card-->
+      <div class="col-xl-4col-md-10 mb-4 bills-detail-card">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Ngày tạo đơn hàng</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800 date"><%= bills[0].idBill.date%>
+                </div>
+              </div>
+              <div class="col-auto">
+                <i class="fas fa-map fa-2x text-gray-300"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Thông tin đơn hàng</h6>
+    </div>
+    <div class="card-body">
+      <div>
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Tên sản phẩm</th>
+              <th>Xuất xử</th>
+              <th>Loại</th>
+              <th>Số lượng</th>
+              <th>Giá sản phẩm (VND)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bills.map(bill => {%>
+            <tr>
+              <td><a href="/product-detail?id=<%- bill.idProduct._id%>"><%= bill.idProduct.name %></a></td>
+              <td><%= bill.idProduct.idOrigin.name %></td>
+              <td><%= bill.idProduct.idTypeProduct.name %></td>
+              <td><%= bill.quantity %></td>
+              <td class="total"><%= bill.idProduct.price %></td>
+            </tr>
+            <%})%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<script type="text/javascript">
+  //parse string to VND
+  const handleCurrency = (number) => {
+    return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+  }
+
+  //parse VND to string
+  const parseCurrency = (string) => {
+    return parseFloat(string.replace(',', ''))
+  }
+
+  const total = document.getElementsByClassName('total')
+
+  for (let index = 0; index < total.length; index++) {
+    document.getElementsByClassName('total')[index].innerText = handleCurrency(document.getElementsByClassName('total')[index].innerText)
+  }
+
+  const date = document.getElementsByClassName('date');
+  for (let index = 0; index < date.length; index++) {
+    document.getElementsByClassName('date')[index].innerText = new Date(document.getElementsByClassName('date')[index].innerText).toLocaleDateString()
+  }
+
+</script>
