@@ -1,0 +1,161 @@
+<link href="css/product.css" rel="stylesheet">
+ <!-- Begin Page Content -->
+ <div class="container-fluid">
+
+    <!-- Page Heading -->
+ 
+   <h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Chỉnh sửa sản phẩm - <%= product.name %></h1>
+  
+  <form id="form-product">
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Tên</label>
+      <input id= "name" type="text" class="form-control" 
+        placeholder="Tên sản phẩm" pattern=".{3,}"  required="true" value="<%= product.name%>">
+        <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small>
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Giá</label>
+      <input id="price" type="number" class="form-control" min="50000"
+        placeholder="Giá 1 kg" required="true" value="<%= product.price%>">
+      <!-- <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small> -->
+    </div>
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Hình ảnh</label>
+      <input id= "img" type="text" class="form-control" placeholder="Link hình ảnh" required="true" value="<%= product.img%>">
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Loại sản phẩm</label>
+      <select id= "idTypeProduct" class="form-control" id="exampleFormControlSelect1" required= "true">
+        <% types.map (item => {
+          if (product.idTypeProduct._id.toString().trim() === item._id.toString().trim()) {%>
+            <option selected value="<%=item._id%>"><%= item.name%></option>
+          <%} else {%>
+            <option value="<%=item._id%>"><%= item.name%></option>
+            <%}
+          })%>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Nguồn gốc</label>
+      <select  id = "idOrigin" class="form-control" id="exampleFormControlSelect1" required="true">
+      <% origins.map (item => {
+          if (product.idOrigin._id.toString().trim() === item._id.toString().trim()) {%>
+               <option selected value="<%=item._id%>"><%= item.name%></option>
+          <%} else {%>
+             <option value="<%=item._id%>"><%= item.name%></option>
+           <%}
+          })%>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleInputEmail1" class="form-edit-product__label--required">Mô tả</label>
+      <textarea id= "description" class="form-control" rows="10">
+            <%= product.description.trim()%>
+            </textarea>
+    </div>
+    
+  </form>
+  <button onclick="handleSubmit()"  id="btn-save" type="button" class="btn btn-primary">Lưu</button>
+  </div>
+  <!-- /.container-fluid -->
+
+
+  <script type="text/javascript">
+
+  const handleSubmit = () => {
+    // console.log("submit: ", e);
+    // const form = document.getElementById("form-product");
+    // console.log("form: ", form)
+
+    const name = $("#name").val();
+    const price = $("#price").val();
+    const description = $("#description").val();
+    const idTypeProduct = $("#idTypeProduct").val();
+    const idOrigin = $("#idOrigin").val();
+    const img = $("#img").val();
+
+    const idProduct = "<%= product._id%>"
+    // const idProduct = `${JSON.parse(productData)._id}`
+    const product = { name, price, description, idTypeProduct, idOrigin, img , idProduct}
+
+    console.log("submit: ", product);
+
+    const modal = $('#inforModal');
+
+    $.ajax({
+      url: "/product-edit",
+      type: "put",
+      data: JSON.stringify(product),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json"
+    })
+      .done(function (result) {
+        console.log("done!", result)
+        const { isSuccess, message } = result;
+        // open info modal
+        // modal.find('[name=info-modal-message]').val(message);
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      })
+      .fail(function (result) {
+        console.log("err: ", result)
+        const { message } = JSON.parse(result.responseText)
+
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      });
+
+  }
+
+  // $(document).ready(function () {
+  // $("#btn-save").click(function (e) {
+
+  //   console.log("on submit: ");
+  //   console.log("submit: ", e);
+
+  //     e.preventDefault();
+      
+  //     const name = $("#name").val();
+  //     const price = $("#price").val();
+  //     const description = $("#description").val();
+  //     const idTypeProduct = $("#idTypeProduct").val();
+  //     const idOrigin = $("#idOrigin").val();
+  //     const img = $("#img").val();
+
+  //     const product = {name, price, description, idTypeProduct, idOrigin, img};
+
+  //   console.log("submit: ", product);
+
+  //     const modal = $('#inforModal');
+      
+  //     $.ajax({
+  //     url: "/product-edit",
+  //     type: "put",
+  //     data: JSON.stringify(product),
+  //     contentType: "application/json; charset=utf-8",
+  //     dataType: "json"
+  //   })
+  //     .done(function (result) {
+  //       console.log("done!", result)
+  //       const { isSuccess, message } = result;
+  //       // open info modal
+  //       // modal.find('[name=info-modal-message]').val(message);
+  //       document.getElementById('info-modal-message').innerHTML = message;
+  //       modal.modal('show');
+  //     })
+  //     .fail(function (result) {
+  //       console.log("err: ", result)
+  //       const { message } = JSON.parse(result.responseText)
+
+  //       document.getElementById('info-modal-message').innerHTML = message;
+  //       modal.modal('show');
+  //     });
+   
+  //   });
+
+  // })
+  
+  </script>
