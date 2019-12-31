@@ -5,18 +5,20 @@ var Schema = mongoose.Schema;
 var PromotionSchema = new Schema(
     {
         name: String,
-        idProductApplied: [
-            {
-                type: ObjectId,
-                ref: 'Product'
-            }
-        ],
+        minScore: {
+            type: Number,
+            default: 0
+       },
         discount: {
             type: Number,
             default: 10
         },
         dateFrom: mongoose.Schema.Types.Date,
         dateTo: mongoose.Schema.Types.Date,
+        isDelete: {
+            type: Boolean,
+            default: false
+        }
     },
     {
         timestamps: true

@@ -6,6 +6,7 @@ import billController from "../controllers/admin/bill.controller";
 import staffController from "../controllers/admin/staff.controller";
 import statisticController from "../controllers/admin/statistic.controller";
 import productController from "../controllers/admin/product.controller";
+import promotionController from "../controllers/admin/promotion.controller";
 // import importProductController from "../controllers/admin/import-product.controller";
 
 router.get('/', adminDashboardController.home);
@@ -18,6 +19,13 @@ router.get('/staff-detail', staffController.detail);
 
 router.get('/statistic', statisticController.list);
 
+//promotion
+router.get('/promotion', promotionController.list);
+router.get('/promotion-add', promotionController.getPageAdd);
+router.post('/promotion-add', promotionController.add);
+router.delete('/promotion-delete', promotionController.delete);
+router.get('/promotion-edit', promotionController.getToEdit);
+router.put('/promotion-edit', promotionController.update);
 //product
 router.get('/product', productController.list);
 router.get('/product-detail', productController.detail);
