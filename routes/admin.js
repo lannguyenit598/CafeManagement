@@ -6,8 +6,10 @@ import billController from "../controllers/admin/bill.controller";
 import staffController from "../controllers/admin/staff.controller";
 import statisticController from "../controllers/admin/statistic.controller";
 import productController from "../controllers/admin/product.controller";
+import authController from "../controllers/admin/auth.controller";
 // import importProductController from "../controllers/admin/import-product.controller";
 
+router.get('/login', authController.login);
 router.get('/', adminDashboardController.home);
 
 router.get('/bill', billController.list);

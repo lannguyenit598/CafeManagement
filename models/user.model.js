@@ -2,24 +2,27 @@ var mongoose = require('mongoose');
 var ObjectId = require("mongodb").ObjectID;
 var Schema = mongoose.Schema;
 
-var BillDetailSchema = new Schema(
+var UserSchema = new Schema(
     {
-        quantity: {
-            type: Number,
-            default: 1
+        name: {
+            type: String
         },
-        idProduct: {
-            type: ObjectId,
-            ref: 'Product'
+        phone: {
+            type: String
         },
-        idBill: {
-            type: ObjectId,
-            ref: 'Bill'
-        }
+        address: {
+            type: String
+        },
+        email: {
+            type: String
+        },
+        password: {
+            type: String
+        },
     }, 
     {
         timestamps: true
     }
 );
 
-module.exports = mongoose.model('User', BillDetailSchema);
+module.exports = mongoose.model('User', UserSchema);
