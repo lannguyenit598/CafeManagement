@@ -21,9 +21,24 @@
 
 
 
-
-
 .import-product-btn {
     margin-left: 25px;
     margin-bottom: 20px;
+}
+
+.input-info {
+    color: red !important;
+    font-style: italic;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.form-edit-product__label--required::after {
+    content: "*";
+    color: red;
+}
+
+
+.product__btn--delete:hover {
+    cursor: pointer !important;
 }

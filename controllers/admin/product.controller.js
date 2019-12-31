@@ -59,7 +59,7 @@ exports.add = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
     try {
-        await Product.deleteOne({ _id: ObjectId(req.body.idProduct)})
+        await Product.deleteOne({ _id: ObjectId(req.body.id)})
 
         res.send({ isSuccess: true, message: "Xóa sản phẩm thành công" });
     } catch (err) {
