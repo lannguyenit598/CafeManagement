@@ -3,7 +3,6 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-
     <form id="form-product" class="needs-validation" novalidate>
         <div class="form-group">
             <label id="validationCustomUsername" for="exampleInputEmail1" class="form-edit-product__label--required">Tên</label>
@@ -12,18 +11,20 @@
                 <div class="invalid-feedback">
                     Please choose a username.
                 </div>
-            <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small>
+            <small id="name-info" class="input-info form-text text-muted">Tên từ 3 ký tự trở lên</small>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-edit-product__label--required">Giá</label>
             <input id="price" type="number" class="form-control" min="50000" placeholder="Giá 1 kg" required="true"
                 value="<%= product && product.price%>">
-            <!-- <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small> -->
+                <small id="price-info" class="input-info form-text text-muted"></small>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-edit-product__label--required">Hình ảnh</label>
             <input id="img" type="text" class="form-control" placeholder="Link hình ảnh" required="true"
                 value="<%= product && product.img%>">
+                <small id="img-info" class="input-info form-text text-muted"></small>
+
         </div>
 
         <div class="form-group">
@@ -44,6 +45,8 @@
                 <%} )
           } %>
             </select>
+             <small id="type-info" class="input-info form-text text-muted"></small>
+
         </div>
 
         <div class="form-group">
@@ -65,6 +68,8 @@
                 <%} )
                     } %>
             </select>
+             <small id="origin-info" class="input-info form-text text-muted"></small>
+
         </div>
 
         <div class="form-group">
@@ -72,6 +77,8 @@
             <textarea id="description" class="form-control" rows="10">
             <%= product&& product.description.trim()%>
             </textarea>
+             <small id="description-info" class="input-info form-text text-muted"></small>
+
         </div>
 
         <button onclick="handleSubmit()" id="btn-save" type="submit" class="btn btn-primary">Lưu</button>

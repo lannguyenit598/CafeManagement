@@ -1,20 +1,19 @@
 var mongoose = require('mongoose');
 var ObjectId = require("mongodb").ObjectID;
 var Schema = mongoose.Schema;
+import {STAFF} from '../utils/constanst'
 
-var BillDetailSchema = new Schema(
+// staff / admin account information
+var UserSchema = new Schema(
     {
-        quantity: {
-            type: Number,
-            default: 1
-        },
-        idProduct: {
-            type: ObjectId,
-            ref: 'Product'
-        },
-        idBill: {
-            type: ObjectId,
-            ref: 'Bill'
+        name: String,
+        phone: String,
+        address: String, 
+        email: String,
+        password: String,
+        typeUser: {
+            type: String,
+            default: STAFF
         }
     }, 
     {
@@ -22,4 +21,4 @@ var BillDetailSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model('User', BillDetailSchema);
+module.exports = mongoose.model('User', UserSchema);
