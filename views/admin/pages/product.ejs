@@ -5,6 +5,18 @@
   <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
 
 
+    <div class="import-product-btn">
+      <!-- <i class="fas fa-plus"></i> -->
+      <button type="button" class="btn btn-primary">
+        <a href="/product-add">
+        <i class="fas fa-plus-circle"></i>
+        Thêm
+      </button>
+    </a>  
+    
+    
+    </div>
+
   <!-- DataTales Example -->
   <div class="card shadow mb-4">
     <!-- <div class="card-header py-3">
@@ -17,28 +29,23 @@
           <thead>
             <tr>
               <th>Tên hàng</th>
+              <th>Giá</th>
               <th>Xuất xứ</th>
               <th>Loại</th>
               <th>Số lượng</th>
             </tr>
           </thead>
-          <tfoot>
-            <tr>
-            <th>Tên hàng</th>
-            <th>Xuất xứ</th>
-            <th>Loại</th>
-            <th>Số lượng</th>
-            <th></th>
-            </tr>
-          </tfoot>
           <tbody>
             <% products.map (item => {%>
               <tr>
-                <td><%= item.name%></td>
+                <td>
+                  <%= item.name%></td>
+                <td><%= item.price%></td>
                 <td><%= item.idOrigin.name%></td>
                 <td><%= item.idTypeProduct.name%></td>
                 <td><%= item.quantity%></td>
-                <td> <a href="/product-detail?id=<%= item._id%>">Chi tiết</a></td>
+                <td> <a href="/product-detail?id=<%= item._id%>">Xem</a></td>
+                <td><a href="/product-edit?id=<%= item._id%>">Sửa</a></td>
               </tr>
             <% })%>
             <!-- </tr> -->
