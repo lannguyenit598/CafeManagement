@@ -1,17 +1,18 @@
+<link href="css/product.css" rel="stylesheet">
 
+<!-- /.container-fluid -->
 
-  <!-- /.container-fluid -->
-
-<h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Thêm sản phẩm</h1>
+<h1 class="h3 mb-4 text-gray-800"><a href="/product"><i class="fas fa-arrow-left"></i></a> Thêm sản phẩm</h1>
   <%- include('../elements/product-form.ejs', {product: null}); %>
 
   <script type="text/javascript">
   
 
   const handleSubmit = () => {
-    // console.log("submit: ", e);
-    // const form = document.getElementById("form-product");
-    // console.log("form: ", form)
+    if (!validateForm()) {
+      console.log("on validate")
+      return;
+    }
 
     const name = $("#name").val();
     const price = $("#price").val();
@@ -22,7 +23,7 @@
     
     const product = { name, price, description, idTypeProduct, idOrigin, img }
 
-    console.log("submit: ", product);
+    // console.log("submit: ", product);s
 
     const modal = $('#inforModal');
 
@@ -50,53 +51,5 @@
       });
     
   }
-
-  // $(document).ready(function () {
-  // $("#btn-save").click(function (e) {
-
-  //   console.log("on submit: ");
-  //   console.log("submit: ", e);
-
-  //     e.preventDefault();
-      
-  //     const name = $("#name").val();
-  //     const price = $("#price").val();
-  //     const description = $("#description").val();
-  //     const idTypeProduct = $("#idTypeProduct").val();
-  //     const idOrigin = $("#idOrigin").val();
-  //     const img = $("#img").val();
-
-  //     const product = {name, price, description, idTypeProduct, idOrigin, img};
-
-  //   console.log("submit: ", product);
-
-  //     const modal = $('#inforModal');
-      
-  //     $.ajax({
-  //     url: "/product-edit",
-  //     type: "put",
-  //     data: JSON.stringify(product),
-  //     contentType: "application/json; charset=utf-8",
-  //     dataType: "json"
-  //   })
-  //     .done(function (result) {
-  //       console.log("done!", result)
-  //       const { isSuccess, message } = result;
-  //       // open info modal
-  //       // modal.find('[name=info-modal-message]').val(message);
-  //       document.getElementById('info-modal-message').innerHTML = message;
-  //       modal.modal('show');
-  //     })
-  //     .fail(function (result) {
-  //       console.log("err: ", result)
-  //       const { message } = JSON.parse(result.responseText)
-
-  //       document.getElementById('info-modal-message').innerHTML = message;
-  //       modal.modal('show');
-  //     });
-   
-  //   });
-
-  // })
   
   </script>

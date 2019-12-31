@@ -32,23 +32,16 @@
                             <th>Xuất xứ</th>
                             <th>Loại</th>
                             <th>Số lượng</th>
+                            <th></th>
                         </tr>
                     </thead>
-                    <tfoot>
-                        <tr>
-                            <th>Tên hàng</th>
-                            <th>Xuất xứ</th>
-                            <th>Loại</th>
-                            <th>Số lượng</th>
-                        </tr>
-                    </tfoot>
                     <% products.map (item => {%>
                     <tr>
                         <td><%=item.name%></td>
                         <td><%=item.idOrigin.name%></td>
                         <td><%=item.idTypeProduct.name%></td>
                         <td><%=item.quantity%></td>
-                        <td> <ahref="/product-detail?id=<%= item._id%>">Chi tiết</a></td>
+                        <td> <a href="/product-detail?id=<%= item._id%>">Chi tiết</a></td>
                     </tr>
                     <% })%>
                     </tr>
@@ -94,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <button  class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
-                <a class="btn btn-primary" onclick= "importProduct()">Nhập hàng</a>
+                <button class="btn btn-primary" onclick= "importProduct()">Nhập hàng</button>
             </div>
         </div>
     </div>
@@ -134,7 +127,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Đóng</button>
-                <a class="btn btn-primary" onclick="exportProduct()">Xuất hàng</a>
+                <button class="btn btn-primary" onclick="exportProduct()">Xuất hàng</button>
             </div>
         </div>
     </div>
@@ -163,13 +156,11 @@
                  const { isSuccess, message} = result;
                  importModal.modal('hide')
         
-                // open info modal
-                // modal.find('[name=info-modal-message]').val(message);
-                 document.getElementById('info-modal-message').innerHTML = message;
-
-                modal.modal('show');
-
+                // document.getElementById('info-modal-message').innerHTML = message;
+                // modal.modal('show');
                 quantity.value="";
+
+                location.reload()
              })
              .fail(function (result) { 
                   console.log("err: ", result)
@@ -180,7 +171,6 @@
                 //  modal.find('[name=info-modal-message]').val(message);
                  modal.modal('show');
                  quantity.value = "";
-
              });
     }
 
@@ -206,12 +196,12 @@
 
                         // close import modal
                         exportModal.modal('hide')
-
-                        document.getElementById('info-modal-message').innerHTML = message;
-
-                        modal.modal('show');
-                        quantity.value="";
                         
+                        // document.getElementById('info-modal-message').innerHTML = message;
+                        // modal.modal('show');
+                        quantity.value="";
+
+                        location.reload();
                     })
                     .fail(function (result) {
                         console.log("err: ",result);

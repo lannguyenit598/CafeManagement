@@ -1,3 +1,5 @@
+<link href="css/product.css" rel="stylesheet">
+
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -7,14 +9,12 @@
 
     <div class="import-product-btn">
       <!-- <i class="fas fa-plus"></i> -->
+      <a href="/product-add">
       <button type="button" class="btn btn-primary">
-        <a href="/product-add">
         <i class="fas fa-plus-circle"></i>
         Thêm
       </button>
-    </a>  
-    
-    
+    </a>
     </div>
 
   <!-- DataTales Example -->
@@ -33,6 +33,9 @@
               <th>Xuất xứ</th>
               <th>Loại</th>
               <th>Số lượng</th>
+              <th></th>
+              <th></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +49,7 @@
                 <td><%= item.quantity%></td>
                 <td> <a href="/product-detail?id=<%= item._id%>">Xem</a></td>
                 <td><a href="/product-edit?id=<%= item._id%>">Sửa</a></td>
+                <td class="product__btn--delete" onclick="confirmDeleteProduct({id:'<%=item._id%>'})">Xóa</td>
               </tr>
             <% })%>
             <!-- </tr> -->
@@ -55,5 +59,65 @@
     </div>
   </div>
 
+  <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    id="confirmDeleteModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xác nhận xóa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="info-modal-message">Bạn có muốn xóa sản phẩm này?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-secondary" onclick="deleteProduct()">Có</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>
 <!-- /.container-fluid -->
+
+<script type="text/javascript">
+  var idProductDelete = null;
+  const confirmDeleteProduct = ({id}) => {
+    const modal = $('#confirmDeleteModal');
+    modal.modal('show');
+    idProductDelete = id;
+  }
+
+   const deleteProduct = () => {
+      const modal = $('#confirmDeleteModal');
+      console.log("idProductDelete: ", idProductDelete)
+
+       $.ajax({
+       url: "/product-delete",
+       type: "delete",
+       data: JSON.stringify({id: idProductDelete}),
+       contentType: "application/json; charset=utf-8",
+       dataType: "json"
+     })
+       .done(function (result) {
+         console.log("done!", result)
+         const { isSuccess, message } = result;
+         location.reload();
+       })
+       .fail(function (result) {
+         console.log("err: ", result)
+         const { message } = JSON.parse(result.responseText)
+
+         const modalInfo = $('#inforModal');
+         document.getElementById('info-modal-message').innerHTML = message;
+         modalInfo.modal('show');
+       });      
+
+
+
+      modal.modal('hide');
+    }
+</script>

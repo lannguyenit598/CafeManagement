@@ -1,4 +1,3 @@
-<link href="css/product.css" rel="stylesheet">
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
@@ -8,10 +7,7 @@
             <label id="validationCustomUsername" for="exampleInputEmail1" class="form-edit-product__label--required">Tên</label>
             <input id="name" type="text" class="form-control" placeholder="Tên sản phẩm" pattern=".{3,}" required
                 value="<%= product && product.name%>" id="validationCustomUsername">
-                <div class="invalid-feedback">
-                    Please choose a username.
-                </div>
-            <small id="name-info" class="input-info form-text text-muted">Tên từ 3 ký tự trở lên</small>
+            <small id="name-info" class="input-info form-text text-muted"></small>
         </div>
         <div class="form-group">
             <label for="exampleInputEmail1" class="form-edit-product__label--required">Giá</label>
@@ -77,10 +73,62 @@
             <textarea id="description" class="form-control" rows="10">
             <%= product&& product.description.trim()%>
             </textarea>
-             <small id="description-info" class="input-info form-text text-muted"></small>
-
+            <small id="description-info" class="input-info form-text text-muted"></small>
         </div>
 
-        <button onclick="handleSubmit()" id="btn-save" type="submit" class="btn btn-primary">Lưu</button>
     </form>
+    <button onclick="handleSubmit()" id="btn-save" type="button" class="btn btn-primary">Lưu</button>
 </div>
+
+<script type="text/javascript">
+
+    const clearWaringForm = () => {
+        $("#name-info").text("")
+        $("#price-info").text("")
+        $("#description-info").text("")
+        $("#img-info").text("")
+    }
+
+    const validateForm = () => {
+        clearWaringForm()
+        const name = $("#name").val();
+        const price = $("#price").val();
+        const description = $("#description").val();
+        const idTypeProduct = $("#idTypeProduct").val();
+        const idOrigin = $("#idOrigin").val();
+        const img = $("#img").val();
+
+        if (!name) {
+            $("#name-info").text("Vui lòng nhập tên")
+            $("#name").focus()
+            return false;
+        }
+
+        if (!price) {
+            $("#price-info").text("Vui lòng nhập giá")
+            $("#price").focus()
+            return false;
+        } else if (price < 50000) {
+            $("#price-info").text("Giá phải lớn hơn 50.000đ")
+            $("#price").focus()
+            return false
+        }
+
+        if (!img) {
+            $("#img-info").text("Vui lòng nhập link hình ảnh")
+            $("#img").focus()
+            return false;
+        }
+
+        if (!description) {
+            $("#description-info").text("Vui lòng nhập mô tả")
+            $("#description").focus()
+            return false;
+        } else if (description.length < 50) {
+            $("#description-info").text("Vui lòng nhập mô tả dài hơn 30 ký tự")
+            $("#description").focus()
+            return false
+        }
+        return true
+    }
+</script>
