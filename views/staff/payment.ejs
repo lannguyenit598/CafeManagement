@@ -86,7 +86,7 @@
                                 </p>
                                 <ul class="post-tags">
                                     <li><button id="order-product"
-                                            onclick="orderProduct({_id: '<%=item._id%>', name: '<%=item.name%>',price: '<%=item.price%>', typeName :'<%=item.idTypeProduct.name%>' });">Đặt
+                                            onclick="orderProduct({_id: '<%=item._id%>', name: '<%=item.name%>',price: '<%=item.price%>', typeName :'<%=item.idTypeProduct.name%>', quantity: '<%=item.quantity%>' });">Đặt
                                             hàng</button></li>
                                 </ul>
                             </div>
@@ -112,6 +112,7 @@
                                             <th>Giá</th>
                                             <th>Loại</th>
                                             <th style="width: 100px;">Số lượng</th>
+                                            <th>Số lượng trong kho</th>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -177,7 +178,7 @@
                             </div>
                             <h6 class="mb-3 title-customer">Tạo thành viên</h6>
                             <div class="form-group input-group" style="margin-bottom: 0;">
-                                <input type="tel" pattern="\d{10}|\d{9}|\d{11}" class="form-control"
+                                <input type="tel" pattern="[0,9]{10}" class="form-control"
                                     placeholder="Số điện thoại" aria-label="Số điện thoại" id='tel-customer'>
                             </div>
                             <span style="color: red; margin-left: 10px; font-size: 12px; font-style: initial;"
@@ -285,7 +286,7 @@
         });
 
         const checkPhoneNumber = (string) => {
-            return string.match(/\d/g) ? string.match(/\d/g).length >= 10 || string.match(/\d/g).length <= 11 : false;
+            return string.match(/[0,9]{10}/) || string.match(/[0,9]{11}/);
         }
 
         //handle enter button search
@@ -325,11 +326,40 @@
             return parseFloat(string.replace(',', ''))
         }
 
+        //render list product 
+        const renderListProduct = (result) => {
+            const { products } = result
+            console.log(products)
+                var html = '';
+                if (products.length === 0) {
+                    html = '<span style="color: #b68834; font-style: initial; margin-left: 15px;">Không tìm thấy sản phẩm</span>';
+                }
+                else {
+                    products.map(item => {
+                        html +=
+                            `<div class="single-blog"><div class="single-menu">` +
+                            `<img class="img-fluid" src="${item.img}" alt=""> ` +
+                            `<div class="div-content"><div class="title-div justify-content-between d-flex">` +
+                            `<h5>${item.name}</h5><p class="price float-right"> ${handleCurrency(item.price)} VND</p>` +
+                            `</div> <p>${item.description}</p><ul class="post-tags">` +
+                            `<li><button id="order-product" onclick="orderProduct({_id: '${item._id}', name: '${item.name}', price: '${item.price}', typeName: '${item.idTypeProduct.name}', quantity: '${item.quantity}'})">Đặt hàng</button>` +
+                            `</li></ul></div></div></div>`;
+                    })
+                }
+                $('#products').html(html);
+        }
+        
+
         //handle button order product
-        const orderProduct = ({ _id, name, price, typeName }) => {
+        const orderProduct = ({ _id, name, price, typeName, quantity }) => {
             // let product = JSON.parse(item)
             if (document.getElementById(_id)) {
-                document.getElementById(_id).value++;
+                if (+document.getElementById(_id).value < +quantity)
+                    document.getElementById(_id).value++;
+                else {
+                    document.getElementById('info-modal-message').innerHTML = "Số lượng hàng không đủ.";
+                    $('#inforModal').modal('show')
+                }
             }
             else {
                 $("#table-product").find('tbody').append(`
@@ -337,8 +367,10 @@
                 <td>${name}</td>
                 <td>${handleCurrency(price)}</td>
                 <td>${typeName}</td>
-                <td><input id=${_id} type="number" name="number" value="1" style="width: 50px;"/></td>
-                <td style="display: none;">${_id}</td></tr>`);
+                <td><input id=${_id} type="number" name="number" min="0" max="${quantity}" value="1" style="width: 50px;"/></td>
+                <td style="display: none;">${_id}</td>
+                <td>${quantity}</td>
+                </tr>`);
             }
         }
 
@@ -415,6 +447,8 @@
                     handleDeleteData();
                     modal.modal('hide');
                     inforModal.modal('show');
+                    // window.location.reload(true);
+                    renderListProduct(result)
 
                 })
                 .fail(function (result) {
@@ -436,24 +470,7 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json"
             }).done(function (result) {
-                const { products } = result
-                var html = '';
-                if (products.length === 0) {
-                    html = '<span style="color: #b68834; font-style: initial; margin-left: 15px;">Không tìm thấy sản phẩm</span>';
-                }
-                else {
-                    products.map(item => {
-                        html +=
-                            `<div class="single-blog"><div class="single-menu">` +
-                            `<img class="img-fluid" src="${item.img}" alt=""> ` +
-                            `<div class="div-content"><div class="title-div justify-content-between d-flex">` +
-                            `<h4>${item.name}</h4><p class="price float-right"> ${handleCurrency(item.price)} VND</p>` +
-                            `</div> <p>${item.description}</p><ul class="post-tags">` +
-                            `<li><button id="order-product" onclick="orderProduct({_id: '${item._id}', name: '${item.name}', price: '${item.price}', typeName: '${item.idTypeProduct.name}'})">Đặt hàng</button>` +
-                            `</li></ul></div></div></div>`;
-                    })
-                }
-                $('#products').html(html);
+                renderListProduct(result)
             })
                 .fail(function (result) {
                     $("#products").html("<div><h3>Không tìm thấy sản phẩm</h3></div>")

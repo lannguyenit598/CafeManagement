@@ -47,6 +47,7 @@ exports.createBill = async (req, res, next) => {
         const newBill = await bill.save()
 
         products.map(async item => {
+            console.log(item._id)
             const billDetail = new BillDetail({
                 idBill: newBill._id,
                 idProduct: item._id,
@@ -54,8 +55,11 @@ exports.createBill = async (req, res, next) => {
                 price: parseInt(item.quantity) * item.price
             })
             await billDetail.save()
+            await Product.findOneAndUpdate({ _id: item._id }, { $inc: { quantity: -item.quantity } }, { new: true })
+            const listProduct = await ProductUtils.getList()
+            res.status(200).send({ isSuccess: true, message: "Thanh toán thành công", products: listProduct });
         })
-        res.status(200).send({ isSuccess: true, message: "Thanh toán thành công" });
+
     } catch (err) {
         console.log("err: ", err.message)
         res.status(500).send({ isSuccess: false, message: "Thanh toán thất bại" });
@@ -88,10 +92,10 @@ exports.getCusomterByPhone = async (req, res) => {
     }
 }
 
-exports.deleteTest = async (req, res ) => {
+exports.deleteTest = async (req, res) => {
     console.log('object')
     await Bill.deleteMany()
     await BillDetail.deleteMany()
     await Customer.deleteMany()
-    res.status(200).json({message: "đã xóa"})
+    res.status(200).json({ message: "đã xóa" })
 }
