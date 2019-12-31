@@ -24,6 +24,8 @@ router.get('/product-detail', productController.detail);
 
 router.get('/product-edit', productController.getDetailToEdit);
 router.put('/product-edit', productController.update);
+router.get('/product-add', productController.getDataToAddProduct);
+router.post('/product-add', productController.add);
 
 // router.get('/create', adminProductController.createData);
 

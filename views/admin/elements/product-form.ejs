@@ -1,0 +1,79 @@
+<link href="css/product.css" rel="stylesheet">
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+
+    <form id="form-product" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label id="validationCustomUsername" for="exampleInputEmail1" class="form-edit-product__label--required">Tên</label>
+            <input id="name" type="text" class="form-control" placeholder="Tên sản phẩm" pattern=".{3,}" required
+                value="<%= product && product.name%>" id="validationCustomUsername">
+                <div class="invalid-feedback">
+                    Please choose a username.
+                </div>
+            <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-edit-product__label--required">Giá</label>
+            <input id="price" type="number" class="form-control" min="50000" placeholder="Giá 1 kg" required="true"
+                value="<%= product && product.price%>">
+            <!-- <small id="emailHelp" class="form-text text-muted">Tên từ 3 ký tự trở lên</small> -->
+        </div>
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-edit-product__label--required">Hình ảnh</label>
+            <input id="img" type="text" class="form-control" placeholder="Link hình ảnh" required="true"
+                value="<%= product && product.img%>">
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-edit-product__label--required">Loại sản phẩm</label>
+            <select id="idTypeProduct" class="form-control" id="exampleFormControlSelect1" required="true">
+                <% if (product) {
+         types.map (item => {
+          if (product.idTypeProduct._id.toString().trim() === item._id.toString().trim()) {%>
+                <option selected value="<%=item._id%>"><%= item.name%></option>
+                <%} else {%>
+                <option value="<%=item._id%>"><%= item.name%></option>
+                <%}
+          })
+          
+        } else { 
+          types.map (item => {%>
+                <option value="<%=item._id%>"><%= item.name%></option>
+                <%} )
+          } %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-edit-product__label--required">Nguồn gốc</label>
+            <select id="idOrigin" class="form-control" id="exampleFormControlSelect1" required="true">
+
+                <% if (product) {
+                   origins.map (item => {
+                    if (product.idOrigin._id.toString().trim() === item._id.toString().trim()) {%>
+                <option selected value="<%=item._id%>"><%= item.name%></option>
+                <%} else {%>
+                <option value="<%=item._id%>"><%= item.name%></option>
+                <%}
+                    })
+                    
+                  } else { 
+                    origins.map (item => {%>
+                <option value="<%=item._id%>"><%= item.name%></option>
+                <%} )
+                    } %>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail1" class="form-edit-product__label--required">Mô tả</label>
+            <textarea id="description" class="form-control" rows="10">
+            <%= product&& product.description.trim()%>
+            </textarea>
+        </div>
+
+        <button onclick="handleSubmit()" id="btn-save" type="submit" class="btn btn-primary">Lưu</button>
+    </form>
+</div>

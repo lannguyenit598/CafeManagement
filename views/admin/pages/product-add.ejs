@@ -2,9 +2,8 @@
 
   <!-- /.container-fluid -->
 
-<h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Chỉnh
-  sửa sản phẩm - <%= product && product.name %></h1>
-  <%- include('../elements/product-form.ejs', {product: product}); %>
+<h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Thêm sản phẩm</h1>
+  <%- include('../elements/product-form.ejs', {product: null}); %>
 
   <script type="text/javascript">
   
@@ -20,23 +19,16 @@
     const idTypeProduct = $("#idTypeProduct").val();
     const idOrigin = $("#idOrigin").val();
     const img = $("#img").val();
-
     
-    const productInfo = "<%= product%>"
-    console.log("product info: ", productInfo)
-  
-    const idProduct = "<%= product._id%>"
-    // const idProduct = `${JSON.parse(productData)._id}`
-    
-    const product = { name, price, description, idTypeProduct, idOrigin, img , idProduct}
+    const product = { name, price, description, idTypeProduct, idOrigin, img }
 
     console.log("submit: ", product);
 
     const modal = $('#inforModal');
 
     $.ajax({
-      url: "/product-edit",
-      type: "put",
+      url: "/product-add",
+      type: "post",
       data: JSON.stringify(product),
       contentType: "application/json; charset=utf-8",
       dataType: "json"

@@ -37,6 +37,13 @@ exports.getDetailToEdit = async (req, res, next) => {
     // res.render('admin/pages/product-detail', { title: 'Quản lý sản phẩm - Chi tiết', id});
 }
 
+exports.getDataToAddProduct = async (req, res, next) => {
+    const types = await ProductUtils.getTypeProduct();
+    const origins = await ProductUtils.getOriginProduct();
+
+    res.render('admin/pages/product-add', { title: 'Thêm sản phẩm', types, origins });
+}
+
 exports.add = async (req, res, next) => {
     try {
         const data = req.body;
