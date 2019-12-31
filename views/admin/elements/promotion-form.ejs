@@ -1,0 +1,114 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <form id="form-promotion" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label  class="form-edit-promotion__label--required">Tên khuyến mãi</label>
+            <input id="name" type="text" class="form-control" placeholder="Tên khuyến mãi" required
+                value="<%= promotion && promotion.name%>">
+            <small id="name-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label  class="form-edit-promotion__label--required">% khuyến mãi</label>
+            <input id="discount" type="number" class="form-control" placeholder="" required="true"
+                value="<%= promotion && promotion.discount%>">
+                <small id="discount-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label  class="form-edit-promotion__label--required">Điểm tích lũy tối thiểu</label>
+            <input id="minScore" type="number" class="form-control" placeholder="" required="true"
+                value="<%= promotion && promotion.minScore%>">
+                <small id="minScore-info" class="input-info form-text text-muted"></small>
+        </div>
+
+        <div class="form-group">
+            <label  class="form-edit-promotion__label--required">Ngày bắt đầu</label>
+            <input id="dateFrom" type="date" class="form-control col-3" placeholder="" required="true" 
+                 value="<%= promotion && new Date(promotion.dateFrom)%>"
+                data-date-format="YYYY-MM-dd"
+                >
+            <small id="dateFrom-info" class="input-info form-text text-muted"></small>
+            
+        </div>
+
+        <div class="form-group">
+            <label  class="form-edit-promotion__label--required">Ngày kết thúc</label>
+            <input id="dateTo" type="date" class="form-control col-3" placeholder="" required="true"
+                value="<%= promotion && new Date(promotion.dateTo)%>"
+                data-date-format="YYYY-MM-dd">
+            <small id="dateTo-info" class="input-info form-text text-muted"></small>
+        </div>
+    </form>
+    <button onclick="handleSubmit()" id="btn-save" type="button" class="btn btn-primary">Lưu</button>
+
+
+</div>
+
+<script type="text/javascript">
+    const clearWaringForm = () => {
+        $("#name-info").text("")
+        $("#discount-info").text("")
+        $("#minScore-info").text("")
+        $("#dateFrom-info").text("")
+        $("#dateTo-info").text("")
+    }
+
+    const validateForm = () => {
+        clearWaringForm()
+        const name = $("#name").val();
+        const discount = $("#discount").val();
+        const minScore = $("#minScore").val();
+        const dateFrom = $("#dateFrom").val();
+        const dateTo = $("#dateTo").val();
+
+        if (!name) {
+            $("#name-info").text("Vui lòng nhập tên")
+            $("#name").focus()
+            return false;
+        }
+
+        if (!discount) {
+            $("#discount-info").text("Vui lòng % khuyến mãi")
+            $("#discount").focus()
+            return false;
+        } else if (discount < 5) {
+            $("#discount-info").text("% khuyến mãi phải lớn hơn 5%")
+            $("#discount").focus()
+            return false
+        }
+
+        if (!minScore) {
+            $("#minScore-info").text("Vui lòng nhập điểm tối thiểu")
+            $("#minScore").focus()
+            return false;
+        } 
+        
+        if (minScore < 0){
+            $("#minScore-info").text("Điểm tích lũy tối thiểu phải từ 0 trở lên")
+            $("#minScore").focus()
+            return false;
+        }
+
+
+        if (!dateFrom) {
+            $("#dateFrom-info").text("Vui lòng nhập ngày bắt đầu")
+            $("#dateFrom").focus()
+            return false;
+        }
+
+         if (!dateTo) {
+            $("#dateTo-info").text("Vui lòng nhập ngày kết thúc")
+            $("#dateTo").focus()
+            return false;
+        }
+
+        if (dateFrom > dateTo) {
+            $("#dateTo-info").text("Ngày kết thúc phải lớn hơn ngày bắt đầu")
+            $("#dateTo").focus()
+            return false
+        }
+
+        return true
+    }
+</script>

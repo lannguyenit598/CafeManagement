@@ -1,0 +1,54 @@
+<link href="css/promotion.css" rel="stylesheet">
+
+<!-- /.container-fluid -->
+
+<h1 class="h3 mb-4 text-gray-800"><a href="/promotion"><i class="fas fa-arrow-left"></i></a> Thêm khuyến mãi</h1>
+  <%- include('../elements/promotion-form.ejs', {promotion: null}); %>
+
+  <script type="text/javascript">
+  
+
+  const handleSubmit = () => {
+    if (!validateForm()) {
+      console.log("on validate")
+      return;
+    }
+
+    const name = $("#name").val();
+    const discount = $("#discount").val();
+    const minScore = $("#minScore").val();
+    const dateFrom = $("#dateFrom").val();
+    const dateTo = $("#dateTo").val();
+    
+    const promotion = { name, discount, minScore, dateFrom, dateTo}
+
+    // console.log("submit: ", promotion);s
+
+    const modal = $('#inforModal');
+
+    $.ajax({
+      url: "/promotion-add",
+      type: "post",
+      data: JSON.stringify(promotion),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json"
+    })
+      .done(function (result) {
+        console.log("done!", result)
+        const { isSuccess, message } = result;
+        // open info modal
+        // modal.find('[name=info-modal-message]').val(message);
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      })
+      .fail(function (result) {
+        console.log("err: ", result)
+        const { message } = JSON.parse(result.responseText)
+
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      });
+    
+  }
+  
+  </script>
