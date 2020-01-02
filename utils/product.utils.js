@@ -6,7 +6,7 @@ const ObjectId = require("mongodb").ObjectID;
 
 exports.getList = async () => {
     try {
-        const products = await Product.find()
+        const products = await Product.find({quantity: {$gt: 0}})
             .populate('idOrigin')
             .populate('idTypeProduct')
         return products;

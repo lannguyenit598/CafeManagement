@@ -4,6 +4,7 @@ const Customer = require('../../models/customers.model')
 const Bill = require('../../models/bill.model')
 const BillDetail = require('../../models/bill-detail.model')
 const Product = require('../../models/product.model')
+const Promotion = require('../../models/promotion.model')
 
 exports.listProduct = async (req, res, next) => {
 
@@ -21,13 +22,16 @@ exports.createBill = async (req, res, next) => {
 
         const { customer, products, total } = req.body
         let newCustomer = {};
-        let score = 1;
-        if (total > 500000) {
-            score += 5;
+        let score = 0;
+        console.log(total)
+        if (total > 2000000) {
+            score += 15;
         } else if (total > 1000000) {
             score += 10;
-        } else if (total > 2000000) {
-            score += 15;
+        } else if (total > 500000) {
+            score += 5;
+        } else {
+            score = 1;
         }
         if (customer.phone !== '') {
             const data = await Customer.findOneAndUpdate({ phone: customer.phone }, {
@@ -46,8 +50,7 @@ exports.createBill = async (req, res, next) => {
         })
         const newBill = await bill.save()
 
-        products.map(async item => {
-            console.log(item._id)
+        for (const item of products) {
             const billDetail = new BillDetail({
                 idBill: newBill._id,
                 idProduct: item._id,
@@ -56,10 +59,10 @@ exports.createBill = async (req, res, next) => {
             })
             await billDetail.save()
             await Product.findOneAndUpdate({ _id: item._id }, { $inc: { quantity: -item.quantity } }, { new: true })
-            const listProduct = await ProductUtils.getList()
-            res.status(200).send({ isSuccess: true, message: "Thanh toán thành công", products: listProduct });
-        })
+        }
 
+        const listProduct = await ProductUtils.getList()
+        res.status(200).send({ isSuccess: true, message: "Thanh toán thành công", products: listProduct });
     } catch (err) {
         console.log("err: ", err.message)
         res.status(500).send({ isSuccess: false, message: "Thanh toán thất bại" });
@@ -84,8 +87,14 @@ exports.getListSearch = async (req, res, next) => {
 exports.getCusomterByPhone = async (req, res) => {
     try {
         const { phone } = req.query
-        const customer = await Customer.find({ phone })
-        res.status(200).send({ customer });
+        const customer = await Customer.findOne({ phone })
+        console.log(customer)
+        let promotion = []
+        if(customer){
+            promotion = await Promotion.find({minScore: { $lte: parseInt(customer.score)}, isDelete: false, dateTo: { $gte: new Date()}}).sort({discount: -1}).limit(1)
+        }
+        console.log(promotion)
+        res.status(200).send({ customer, promotion });
     } catch (err) {
         console.log("err: ", err.message)
         res.status(500).send({ customer: [] });
