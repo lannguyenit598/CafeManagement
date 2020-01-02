@@ -7,7 +7,6 @@ exports.list = async (req, res, next) => {
         const bills = await Bill.find()
             .populate('idCustomer')
 
-        console.log(bills)
         res.render('admin/pages/bill', { title: 'Quản lý đơn hàng', bills });
     } catch (err) {
         console.log('err: ', err)
@@ -34,7 +33,6 @@ exports.detail = async (req, res, next) => {
                     path: 'idOrigin'
                 }]
             })
-        console.log(bills)
         res.render('admin/pages/bill-detail', { title: 'Quản lý chi tiết đơn hàng', bills });
     } catch (err) {
         console.log('err: ', err)
