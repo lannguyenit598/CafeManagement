@@ -13,6 +13,7 @@ const router = require("express").Router();
 router.use(expressLayouts)
 
 var indexRouter = require('./routes/index');
+const productRouter = require('./routes/product');
 const adminRouter = require('./routes/admin');
 const staffRouter = require('./routes/staff');
 var app = express();
@@ -34,7 +35,7 @@ mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: t
   }
 });
 
-
+app.use('/home-product',productRouter);
 app.use('/home', indexRouter);
 app.use('/home-staff', staffRouter);
 app.use(expressLayouts);

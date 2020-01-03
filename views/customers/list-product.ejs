@@ -29,6 +29,7 @@
   <link rel="stylesheet" href="css/animate.min.css">
   <link rel="stylesheet" href="css/owl.carousel.css">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/list-product/index.css">
 </head>
 
 <body>
@@ -56,21 +57,14 @@
     <div class="container">
       <div class="row align-items-center justify-content-between d-flex">
         <div id="logo">
-          <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+          <a href="#"><img src="img/logo.png" alt="" title="" /></a>
         </div>
         <nav id="nav-menu-container">
           <ul class="nav-menu">
             <li class="menu-active"><a href="#home">Trang chủ</a></li>
             <li><a href="#about">Về chúng tôi</a></li>
             <li><a href="#coffee">Sản phẩm</a></li>
-            <li><a href="#review">Đánh giá</a></li>
             <li><a href="#blog">Bài viết</a></li>
-            <li class="menu-has-children"><a href="">Pages</a>
-              <ul>
-                <li><a href="generic.html">Generic</a></li>
-                <li><a href="elements.html">Elements</a></li>
-              </ul>
-            </li>
           </ul>
         </nav><!-- #nav-menu-container -->
       </div>
@@ -83,11 +77,11 @@
     <div class="container">
       <div class="row fullscreen d-flex align-items-center justify-content-start">
         <div class="banner-content col-lg-7">
-          <h6 class="text-white text-uppercase">Hãy khởi đầu ngày mới bằng </h6>
+          <h6 class="text-white text-uppercase">Cafe - Hương vị của cuộc sống</h6>
           <h1>
-            Bắt đầu ngày mới với<br>
-            cà phê đen
+            Khởi đầu ngày mới tách cafe
           </h1>
+
         </div>
       </div>
     </div>
@@ -100,17 +94,18 @@
       <div class="row justify-content-start align-items-center">
         <div class="col-lg-6 video-right justify-content-center align-items-center d-flex">
           <div class="overlay overlay-bg"></div>
-          <a class="play-btn" href="https://youtu.be/au0gYwF8YHQ"><img class="img-fluid" src="img/play-icon.png"
-              alt=""></a>
+          <a class="play-btn" href="https://www.youtube.com/watch?v=ARA0AxrnHdM"><img class="img-fluid"
+              src="img/play-icon.png" alt=""></a>
         </div>
         <div class="col-lg-6 video-left">
-          <h6>Live Coffee making process.</h6>
-          <h1>We Telecast our <br>
-            Coffee Making Live</h1>
-          <p><span>We are here to listen from you deliver exellence</span></p>
+          <h6>Cafe không chỉ là thức uống</h6>
+          <h1>Cafe là bạn <br>
+            Là hương vị cuộc sống</h1>
+          <p><span>Chúng tôi luôn cung cấp cho bạn những điều tuyệt vời nhất</span></p>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod temp or incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim.
+            Cà phê không phải là thú thanh thản như trà, không mạnh mẽ bạo liệt như rượu. Người nhẹ nhàng thì cho rằng
+            cà phê là cầu nối giữa niềm vui và nỗi buồn. Với những người phiền muộn, cà phê càng day dứt như một bản
+            nhạc có nhiều nốt trầm lắng.
           </p>
           <img class="img-fluid" src="img/signature.png" alt="">
         </div>
@@ -125,142 +120,46 @@
       <div class="row d-flex justify-content-center">
         <div class="menu-content pb-60 col-lg-10">
           <div class="title text-center">
-            <h1 class="mb-10">What kind of Coffee we serve for you</h1>
-            <p>Who are in extremely love with eco friendly system.</p>
+            <h1 class="mb-10">Sản phẩm của chúng tôi</h1>
+            <p>Mỗi sản phẩm là một món quà mà chúng tôi luôn chú trọng từ những điều nhỏ nhất.</p>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-lg-4">
+      <div class="row list-product">
+        <% products.map(item => {%>
+        <div class="single-blog">
           <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Cappuccino</h4>
-              <p class="price float-right">
-                $49
+            <img class="img-fluid" src="<%=item.img%>" alt="">
+            <div class="div-content">
+              <div class="title-div justify-content-between d-flex">
+                <h5><%= item.name%></h5>
+                <p class="price float-right">
+                  <%= item.price%>
+                </p>
+              </div>
+              <p>
+                <%= item.description%>
               </p>
+              <ul class="post-tags">
+                <li><a href="/home-product?id=<%= item._id %>">Xem chi tiết</a></li>
+              </ul>
             </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
           </div>
         </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Americano</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Espresso</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Macchiato</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Mocha</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Coffee Latte</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Piccolo Latte</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Ristretto</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="single-menu">
-            <div class="title-div justify-content-between d-flex">
-              <h4>Affogato</h4>
-              <p class="price float-right">
-                $49
-              </p>
-            </div>
-            <p>
-              Usage of the Internet is becoming more common due to rapid advance.
-            </p>
-          </div>
-        </div>
+        <%})%>
       </div>
     </div>
   </section>
   <!-- End menu Area -->
 
   <!-- Start gallery Area -->
-  <section class="gallery-area section-gap" id="gallery">
+  <section class="gallery-area section-gap" id="blog">
     <div class="container">
       <div class="row d-flex justify-content-center">
         <div class="menu-content pb-60 col-lg-10">
           <div class="title text-center">
-            <h1 class="mb-10">What kind of Coffee we serve for you</h1>
-            <p>Who are in extremely love with eco friendly system.</p>
+            <h1 class="mb-10">Cảm nhận của khách hàng</h1>
+            <p>Khách hàng luôn chia sẻ với chúng tôi những hình ảnh tuyệt vời nhất.</p>
           </div>
         </div>
       </div>
@@ -295,158 +194,33 @@
   </section>
   <!-- End gallery Area -->
 
-  <!-- Start review Area -->
-  <section class="review-area section-gap" id="review">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="menu-content pb-60 col-lg-10">
-          <div class="title text-center">
-            <h1 class="mb-10">What kind of Coffee we serve for you</h1>
-            <p>Who are in extremely love with eco friendly system.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-6 single-review">
-          <img src="img/r1.png" alt="">
-          <div class="title d-flex flex-row">
-            <h4>lorem ipusm</h4>
-            <div class="star">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-            </div>
-          </div>
-          <p>
-            Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner,
-            speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-          </p>
-        </div>
-        <div class="col-lg-6 col-md-6 single-review">
-          <img src="img/r2.png" alt="">
-          <div class="title d-flex flex-row">
-            <h4>lorem ipusm</h4>
-            <div class="star">
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star checked"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-              <span class="fa fa-star"></span>
-            </div>
-          </div>
-          <p>
-            Accessories Here you can find the best computer accessory for your laptop, monitor, printer, scanner,
-            speaker. Here you can find the best computer accessory for your laptop, monitor, printer, scanner, speaker.
-          </p>
-        </div>
-      </div>
-      <div class="row counter-row">
-        <div class="col-lg-3 col-md-6 single-counter">
-          <h1 class="counter">2536</h1>
-          <p>Happy Client</p>
-        </div>
-        <div class="col-lg-3 col-md-6 single-counter">
-          <h1 class="counter">7562</h1>
-          <p>Total Projects</p>
-        </div>
-        <div class="col-lg-3 col-md-6 single-counter">
-          <h1 class="counter">2013</h1>
-          <p>Cups Coffee</p>
-        </div>
-        <div class="col-lg-3 col-md-6 single-counter">
-          <h1 class="counter">10536</h1>
-          <p>Total Submitted</p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End review Area -->
-
-  <!-- Start blog Area -->
-  <section class="blog-area section-gap" id="blog">
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="menu-content pb-60 col-lg-10">
-          <div class="title text-center">
-            <h1 class="mb-10">What kind of Coffee we serve for you</h1>
-            <p>Who are in extremely love with eco friendly system.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-6 col-md-6 single-blog">
-          <img class="img-fluid" src="img/b1.jpg" alt="">
-          <ul class="post-tags">
-            <li><a href="#">Travel</a></li>
-            <li><a href="#">Life Style</a></li>
-          </ul>
-          <a href="#">
-            <h4>Portable latest Fashion for young women</h4>
-          </a>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore.
-          </p>
-          <p class="post-date">
-            31st January, 2018
-          </p>
-        </div>
-        <div class="col-lg-6 col-md-6 single-blog">
-          <img class="img-fluid" src="img/b2.jpg" alt="">
-          <ul class="post-tags">
-            <li><a href="#">Travel</a></li>
-            <li><a href="#">Life Style</a></li>
-          </ul>
-          <a href="#">
-            <h4>Portable latest Fashion for young women</h4>
-          </a>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore.
-          </p>
-          <p class="post-date">
-            31st January, 2018
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End blog Area -->
-
-
   <!-- start footer Area -->
   <footer class="footer-area section-gap">
     <div class="container">
       <div class="row">
         <div class="col-lg-5 col-md-6 col-sm-6">
           <div class="single-footer-widget">
-            <h6>About Us</h6>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-              dolore magna aliqua.
+              Chúng tôi luôn sẵn sàng cung cấp cho bạn những lựa chọn tuyệt với nhất
             </p>
             <p class="footer-text">
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
               Copyright &copy;
-              <script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made
-              with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com"
-                target="_blank">Colorlib</a>
+              <script>document.write(new Date().getFullYear());</script> All rights reserveds<i class="fa fa-heart-o"
+                aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
               <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
             </p>
           </div>
         </div>
         <div class="col-lg-5  col-md-6 col-sm-6">
           <div class="single-footer-widget">
-            <h6>Newsletter</h6>
-            <p>Stay update with our latest</p>
+            <h6>Nhận các thông báo mới nhất từ chúng tôi</h6>
             <div class="" id="mc_embed_signup">
               <form target="_blank" novalidate="true"
                 action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
                 method="get" class="form-inline">
-                <input class="form-control" name="EMAIL" placeholder="Enter Email" onfocus="this.placeholder = ''"
-                  onblur="this.placeholder = 'Enter Email '" required="" type="email">
+                <input class="form-control" name="EMAIL" placeholder="Nhập mail của bạn" onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Nhập mail của bạn '" required="" type="email">
                 <button class="click-btn btn btn-default"><i class="fa fa-long-arrow-right"
                     aria-hidden="true"></i></button>
                 <div style="position: absolute; left: -5000px;">
@@ -460,8 +234,7 @@
         </div>
         <div class="col-lg-2 col-md-6 col-sm-6 social-widget">
           <div class="single-footer-widget">
-            <h6>Follow Us</h6>
-            <p>Let us be social</p>
+            <h6>Liên hệ với chúng tôi</h6>
             <div class="footer-social d-flex align-items-center">
               <a href="#"><i class="fa fa-facebook"></i></a>
               <a href="#"><i class="fa fa-twitter"></i></a>
@@ -495,6 +268,20 @@
   <script src="js/jquery.counterup.min.js"></script>
   <script src="js/mail-script.js"></script>
   <script src="js/main.js"></script>
+
+  <script type="text/javascript">
+
+    $(document).ready(() => {
+      $('.price').get().map(item => {
+        item.innerHTML = handleCurrency(item.innerText) + " VND"
+      })
+    })
+
+     //parse string to VND
+     const handleCurrency = (number) => {
+            return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+  </script>
 </body>
 
 </html>
