@@ -1,15 +1,15 @@
-<link href="css/product.css" rel="stylesheet">
+<link href="css/promotion.css" rel="stylesheet">
 
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
   <!-- Page Heading -->
-  <h1 class="h3 mb-2 text-gray-800">Quản lý sản phẩm</h1>
+  <h1 class="h3 mb-2 text-gray-800">Quản lý khuyến mãi</h1>
 
 
-    <div class="import-product-btn">
+    <div class="import-promotion-btn">
       <!-- <i class="fas fa-plus"></i> -->
-      <a href="/product-add">
+      <a href="/promotion-add">
       <button type="button" class="btn btn-primary">
         <i class="fas fa-plus-circle"></i>
         Thêm
@@ -28,28 +28,26 @@
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
           <thead>
             <tr>
-              <th>Tên hàng</th>
-              <th>Giá</th>
-              <th>Xuất xứ</th>
-              <th>Loại</th>
-              <th>Số lượng</th>
-              <th></th>
+              <th>Tên</th>
+              <th>% khuyến mãi</th>
+              <th>Ngày bắt đầu</th>
+              <th>Ngày kết thúc</th>
+              <th>Điểm tích lũy</th>
               <th></th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <% products.map (item => {%>
+            <% promotions.map (item => {%>
               <tr>
                 <td>
                   <%= item.name%></td>
-                <td><%= item.price%></td>
-                <td><%= item.idOrigin.name%></td>
-                <td><%= item.idTypeProduct.name%></td>
-                <td><%= item.quantity%></td>
-                <td> <a href="/product-detail?id=<%= item._id%>">Xem</a></td>
-                <td><a href="/product-edit?id=<%= item._id%>">Sửa</a></td>
-                <td class="product__btn--delete" onclick="confirmDeleteProduct({id:'<%=item._id%>'})">Xóa</td>
+                <td><%= item.discount%>%</td>
+                <td><%= item.dateFrom && item.dateFrom.toLocaleDateString()%></td>
+                <td><%=  item.dateTo &&  item.dateTo.toLocaleDateString()%></td>
+                <td>từ <%= item.minScore%> điểm</td>
+                <td><a href="/promotion-edit?id=<%= item._id%>">Sửa</a></td>
+                <td class="promotion__btn--delete" onclick="confirmDeletePromotion({id:'<%=item._id%>'})">Xóa</td>
               </tr>
             <% })%>
             <!-- </tr> -->
@@ -70,11 +68,11 @@
           </button>
         </div>
         <div class="modal-body">
-          <p id="info-modal-message">Bạn có muốn xóa sản phẩm này?</p>
+          <p id="info-modal-message">Bạn có muốn xóa khuyến mãi này?</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-          <button type="button" class="btn btn-secondary" onclick="deleteProduct()">Có</button>
+          <button type="button" class="btn btn-secondary" onclick="deletePromotion()">Có</button>
         </div>
       </div>
     </div>
@@ -84,21 +82,21 @@
 <!-- /.container-fluid -->
 
 <script type="text/javascript">
-  var idProductDelete = null;
-  const confirmDeleteProduct = ({id}) => {
+  var idPromotionDelete = null;
+  const confirmDeletePromotion = ({id}) => {
     const modal = $('#confirmDeleteModal');
     modal.modal('show');
-    idProductDelete = id;
+    idPromotionDelete = id;
   }
 
-   const deleteProduct = () => {
+   const deletePromotion = () => {
       const modal = $('#confirmDeleteModal');
-      console.log("idProductDelete: ", idProductDelete)
+      console.log("idPromotionDelete: ", idPromotionDelete)
 
        $.ajax({
-       url: "/product-delete",
+       url: "/promotion-delete",
        type: "delete",
-       data: JSON.stringify({id: idProductDelete}),
+       data: JSON.stringify({id: idPromotionDelete}),
        contentType: "application/json; charset=utf-8",
        dataType: "json"
      })

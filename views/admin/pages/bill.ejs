@@ -17,7 +17,6 @@
               <th>Tên khách hàng</th>
               <th>Tổng giá (VND)</th>
               <th>Ngày tạo</th>
-              <th>Tên khuyến mãi</th>
             </tr>
           </thead>
           <tbody>
@@ -32,7 +31,6 @@
               <%}%>
               <td class="total"><%= item.total %></td>
               <td class="date"><%= item.date %></td>
-              <td>Khuyến mãi</td>
               <td> <a href="/bill-detail?idBill=<%= item._id%>">Chi tiết</a></td>
             </tr>
             <%})%>
@@ -55,9 +53,15 @@
     return parseFloat(string.replace(',', ''))
   }
 
-  for (let index = 0; index < 4; index++) {
-    document.getElementsByClassName('total')[index].innerText = handleCurrency(document.getElementsByClassName('total')[index].innerText)
-    document.getElementsByClassName('date')[index].innerText = new Date(document.getElementsByClassName('date')[index].innerText).toLocaleDateString()
-  }
+  const total = document.getElementsByClassName('total')
+
+for (let index = 0; index < total.length; index++) {
+  document.getElementsByClassName('total')[index].innerText = handleCurrency(document.getElementsByClassName('total')[index].innerText)
+}
+
+const date = document.getElementsByClassName('date');
+for (let index = 0; index < date.length; index++) {
+  document.getElementsByClassName('date')[index].innerText = new Date(document.getElementsByClassName('date')[index].innerText).toLocaleDateString()
+}
 
 </script>

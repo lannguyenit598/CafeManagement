@@ -1,0 +1,92 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <form id="form-staff" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label id="validationStaff" for="validationStaff"
+                class="form-edit-product__label--required">Tên</label>
+            <input id="name" type="text" class="form-control" pattern=".{3,}" required="true" value="<%= staff && staff.name%>"
+                id="validationStaff">
+            <small id="name-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPhone" class="form-edit-product__label--required">Số điện thoại</label>
+            <input id="phone" type="text" class="form-control" required="true" value="<%= staff && staff.phone%>">
+            <small id="phone-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputAddress" class="form-edit-product__label--required">Address</label>
+            <input id="address" type="text" class="form-control" required="true" value="<%= staff && staff.address%>">
+            <small id="address-info" class="input-info form-text text-muted"></small>
+        </div>
+
+        <div class="form-group">
+            <label for="exampleInputEmail" class="form-edit-product__label--required">Email</label>
+            <input id="email" type="email" class="form-control" required="true" value="<%= staff && staff.email%>">
+            <small id="email-info" class="input-info form-text text-muted"></small>
+
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword" class="form-edit-product__label--required">Password</label>
+            <input id="password" type="password" class="form-control" required="true" value="<%= staff && staff.password%>">
+            <small id="password-info" class="input-info form-text text-muted"></small>
+
+        </div>
+    </form>
+    <button onclick="handleSubmit()" id="btn-save" type="button" class="btn btn-primary">Lưu</button>
+</div>
+
+<script type="text/javascript">
+
+    const clearWaringForm = () => {
+        $("#name-info").text("")
+        $("#phone-info").text("")
+        $("#address-info").text("")
+        $("#email-info").text("")
+        $("password-info").text("")
+    }
+
+    const validateForm = () => {
+        clearWaringForm()
+        const name = $("#name").val();
+        const phone = $("#phone").val();
+        const address = $("#address").val();
+        const email = $("#email").val();
+        const password = $("#password").val();
+
+        if (!name) {
+            $("#name-info").text("Vui lòng nhập tên")
+            $("#name").focus()
+            return false;
+        }
+
+        if (!phone) {
+            $("#phone-info").text("Vui lòng nhập số điện thoại")
+            $("#phone").focus()
+            return false;
+        }
+
+        if (!address) {
+            $("#address-info").text("Vui lòng nhập địa chỉ")
+            $("#address").focus()
+            return false;
+        }
+
+        if (!email) {
+            $("#email-info").text("Vui lòng nhập địa chỉ email")
+            $("#email").focus()
+            return false;
+        }
+        if (!password) {
+            $("#phone-info").text("Vui lòng nhập số điện thoại")
+            $("#phone").focus()
+            return false;
+        }else if (password.length < 8) {
+            $("#password-info").text("Vui lòng nhập mật khẩu lớn hơn 8 kí tự")
+            $("#password").focus()
+            return false
+        }
+        return true
+    }
+</script>

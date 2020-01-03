@@ -1,0 +1,75 @@
+
+<link href="css/promotion.css" rel="stylesheet">
+<!-- <script src="/public/vendor/jquery/jquery.js"></script> -->
+
+<script type="text/javascript">
+  
+  </script>
+<!-- /.container-fluid -->
+
+<!-- <h1 class="h3 mb-4 text-gray-800"><a href="javascript:history.back()"><i class="fas fa-arrow-left"></i></a> Chỉnh sửa sản phẩm - <%= promotion && promotion.name %></h1> -->
+<h1 class="h3 mb-4 text-gray-800"><a href="/promotion"><i class="fas fa-arrow-left"></i></a> Chỉnh sửa khuyến mãi - <%= promotion && promotion.name %></h1>
+  <%- include('../elements/promotion-form.ejs', {promotion: promotion}); %>
+
+  <script type="text/javascript">
+     const formatDate = (date) => {
+        var d = new Date(date);
+        var mm = ("0" + (d.getMonth() + 1)).slice(-2)
+        var dd = ("0" + d.getDate()).slice(-2)
+        var yy = d.getFullYear();
+        return `${yy}-${mm}-${dd}`
+      }
+
+      // format date to show
+      const startDate = "<%= promotion.dateFrom%>"
+      const startDateFormat = formatDate(startDate)
+      console.log("startDate: ", startDateFormat)
+      document.getElementById("dateFrom").value = startDateFormat
+
+      const endDate = "<%= promotion.dateTo%>"
+      const endDateFormat = formatDate(endDate)
+      console.log("startDate: ", endDateFormat)
+
+      document.getElementById("dateTo").value = endDateFormat
+
+    const handleSubmit = () => {
+      if (!validateForm()) {
+        console.log("on validate")
+        return;
+      }
+
+      const name = $("#name").val();
+      const discount = $("#discount").val();
+      const minScore = $("#minScore").val();
+      const dateFrom = $("#dateFrom").val();
+      const dateTo = $("#dateTo").val();
+      const id = "<%= promotion._id%>"
+
+      const promotion = { name, discount, minScore, dateFrom, dateTo, id }
+
+      // console.log("submit: ", promotion);s
+
+      const modal = $('#inforModal');
+
+      $.ajax({
+        url: "/promotion-edit",
+        type: "put",
+        data: JSON.stringify(promotion),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json"
+      })
+        .done(function (result) {
+          console.log("done!", result)
+          const { isSuccess, message } = result;
+          location.reload()
+        })
+        .fail(function (result) {
+          console.log("err: ", result)
+          const { message } = JSON.parse(result.responseText)
+
+          document.getElementById('info-modal-message').innerHTML = message;
+          modal.modal('show');
+        });
+    }
+
+  </script>

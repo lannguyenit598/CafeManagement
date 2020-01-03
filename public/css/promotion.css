@@ -1,0 +1,15 @@
+.input-info {
+    color: red !important;
+    font-style: italic;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+
+.form-edit-promotion__label--required::after {
+    content: "*";
+    color: red;
+}
+
+.promotion__btn--delete:hover {
+    cursor: pointer !important;
+}

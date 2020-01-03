@@ -178,8 +178,8 @@
                             </div>
                             <h6 class="mb-3 title-customer">Tạo thành viên</h6>
                             <div class="form-group input-group" style="margin-bottom: 0;">
-                                <input type="tel" pattern="[0,9]{10}" class="form-control"
-                                    placeholder="Số điện thoại" aria-label="Số điện thoại" id='tel-customer'>
+                                <input type="tel" pattern="[0,9]{10}" class="form-control" placeholder="Số điện thoại"
+                                    aria-label="Số điện thoại" id='tel-customer'>
                             </div>
                             <span style="color: red; margin-left: 10px; font-size: 12px; font-style: initial;"
                                 class="message-err-tel-create"></span>
@@ -196,11 +196,15 @@
                                     id='score-customer' disabled style="display: none;">
                             </div>
                         </div>
-                        <div class="col-lg-5 col-md-5">
+                        <div class="col-lg-5 col-md-5 tag">
                             <h5>Tổng tiền</h5>
                             <span id="total" class="tag-number">0 VND</span>
                             <h5>Khuyến mãi</h5>
-                            <span id="promotion" class="tag-number">50%</span>
+                            <span id="promotion" class="tag-number">0 %</span>
+                            <div id="tag-money" style="display: none;">
+                                <h5>Thành tiền</h5>
+                                <span id="total-discount" class="tag-number">0 VND</span>
+                            </div>
                         </div>
                     </div>
                     <div style="text-align: right;">
@@ -310,10 +314,16 @@
         // delele data table 
         const handleDeleteData = () => {
             $("#table-product").find('tbody').find('tr').remove();
+            document.getElementById('tel-customer-search').value = '';
             document.getElementById('name-customer').value = '';
             document.getElementById('tel-customer').value = '';
             document.getElementById('email-customer').value = '';
+            document.getElementById('score-customer').value = '';
             document.getElementById('total').innerHTML = 0 + ' VND';
+            document.getElementById('promotion').innerHTML = 0 + ' %';
+            document.getElementById('total-discount').innerHTML = 0 + ' VND';
+            document.getElementById('tag-money').style.display = 'none';
+
         }
 
         //parse string to VND
@@ -323,32 +333,32 @@
 
         //parse VND to string
         const parseCurrency = (string) => {
-            return parseFloat(string.replace(',', ''))
+            return parseFloat(string.split(',').join(''))
         }
 
         //render list product 
         const renderListProduct = (result) => {
             const { products } = result
             console.log(products)
-                var html = '';
-                if (products.length === 0) {
-                    html = '<span style="color: #b68834; font-style: initial; margin-left: 15px;">Không tìm thấy sản phẩm</span>';
-                }
-                else {
-                    products.map(item => {
-                        html +=
-                            `<div class="single-blog"><div class="single-menu">` +
-                            `<img class="img-fluid" src="${item.img}" alt=""> ` +
-                            `<div class="div-content"><div class="title-div justify-content-between d-flex">` +
-                            `<h5>${item.name}</h5><p class="price float-right"> ${handleCurrency(item.price)} VND</p>` +
-                            `</div> <p>${item.description}</p><ul class="post-tags">` +
-                            `<li><button id="order-product" onclick="orderProduct({_id: '${item._id}', name: '${item.name}', price: '${item.price}', typeName: '${item.idTypeProduct.name}', quantity: '${item.quantity}'})">Đặt hàng</button>` +
-                            `</li></ul></div></div></div>`;
-                    })
-                }
-                $('#products').html(html);
+            var html = '';
+            if (products.length === 0) {
+                html = '<span style="color: #b68834; font-style: initial; margin-left: 15px;">Không tìm thấy sản phẩm</span>';
+            }
+            else {
+                products.map(item => {
+                    html +=
+                        `<div class="single-blog"><div class="single-menu">` +
+                        `<img class="img-fluid" src="${item.img}" alt=""> ` +
+                        `<div class="div-content"><div class="title-div justify-content-between d-flex">` +
+                        `<h5>${item.name}</h5><p class="price float-right"> ${handleCurrency(item.price)} VND</p>` +
+                        `</div> <p>${item.description}</p><ul class="post-tags">` +
+                        `<li><button id="order-product" onclick="orderProduct({_id: '${item._id}', name: '${item.name}', price: '${item.price}', typeName: '${item.idTypeProduct.name}', quantity: '${item.quantity}'})">Đặt hàng</button>` +
+                        `</li></ul></div></div></div>`;
+                })
+            }
+            $('#products').html(html);
         }
-        
+
 
         //handle button order product
         const orderProduct = ({ _id, name, price, typeName, quantity }) => {
@@ -394,10 +404,18 @@
             });
             if (total <= 0) {
                 document.getElementById('btn-pay').setAttribute("disabled", "disabled");
+                document.getElementById("tag-money").style.display = 'none';
             }
             else {
-                document.getElementById("total").innerHTML = handleCurrency(total) + " VND"
+                document.getElementById("total").innerHTML = handleCurrency(total) + " VND";
                 document.getElementById('btn-pay').removeAttribute("disabled");
+                const discount = document.getElementById('promotion').innerText.split(' ')[0]
+                if (discount > 0) {
+                    document.getElementById('total').style.textDecoration = 'line-through';
+                    document.getElementById('tag-money').style.display = 'block';
+                    const totalDiscount = handleCurrency((parseCurrency(document.getElementById('total').innerText) * (100 - discount) / 100).toFixed(2))
+                    document.getElementById('total-discount').innerText = totalDiscount + ' VND'
+                }
             }
         }
 
@@ -430,9 +448,8 @@
                 phone: document.getElementById('tel-customer').value,
                 email: document.getElementById('email-customer').value,
             }
-
-            const total = parseCurrency(document.getElementById('total').innerText)
-
+            const discount = document.getElementById('promotion').innerText.split(' ')[0]
+            const total = (100 - discount) / 100 * parseCurrency(document.getElementById('total').innerText)
             $.ajax({
                 url: "/home-staff",
                 type: "POST",
@@ -497,19 +514,27 @@
                         dataType: "json"
                     })
                         .done(function (result) {
-                            const { customer } = result
+                            const { customer, promotion } = result
                             if (customer.length === 0) {
                                 document.getElementsByClassName('title-customer')[0].innerText = "Tạo thành viên"
                                 document.getElementsByClassName('message-err-tel')[0].innerText = "Không tìm thấy số điện thoại"
                             }
                             else {
-                                console.log(customer)
                                 document.getElementsByClassName('title-customer')[0].innerText = "Thông tin thành viên"
                                 document.getElementById('score-customer').style.display = "block"
-                                document.getElementById('name-customer').value = customer[0].name;
-                                document.getElementById('tel-customer').value = customer[0].phone;
-                                document.getElementById('email-customer').value = customer[0].email;
-                                document.getElementById('score-customer').value = customer[0].score;
+                                document.getElementById('name-customer').value = customer.name;
+                                document.getElementById('tel-customer').value = customer.phone;
+                                document.getElementById('email-customer').value = customer.email;
+                                document.getElementById('score-customer').value = customer.score;
+
+                                if (promotion.length > 0) {
+                                    document.getElementById('promotion').innerText = promotion[0].discount + ' %';
+                                    document.getElementById('total').style.textDecoration = 'line-through';
+                                    document.getElementById('tag-money').style.display = 'block';
+                                    const total = handleCurrency((parseCurrency(document.getElementById('total').innerText) * (100 - promotion[0].discount) / 100).toFixed(2))
+                                    document.getElementById('total-discount').innerText = total + ' VND'
+
+                                }
                             }
                         })
                         .fail(function (result) {

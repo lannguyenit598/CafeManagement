@@ -16,6 +16,7 @@ const router = require("express").Router();
 router.use(expressLayouts)
 
 var indexRouter = require('./routes/index');
+const productRouter = require('./routes/product');
 const adminRouter = require('./routes/admin');
 const staffRouter = require('./routes/staff');
 var app = express();
@@ -31,13 +32,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
-mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true,}, (err, res) => {
+
+mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true, useFindAndModify: false}, (err, res) => {
   if (!err) {
     console.log('Connect to databse successfully!');
   }
 });
 
-
+app.use('/home-product',productRouter);
 app.use('/home', indexRouter);
 app.use('/home-staff', staffRouter);
 app.use(expressLayouts);

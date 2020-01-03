@@ -2,6 +2,7 @@
 .post-tags {
   text-align: center;
   padding-top: 15px;
+  margin-top: auto;
 }
 
 .post-tags li {
@@ -27,10 +28,10 @@
   cursor: pointer;
 }
 .single-blog {
-  width: 200px;
-  height: 300px;
+  width: 300px;
+  height: 430px;
   display: inline-block;
-  margin: 10px 5px;
+  margin: 15px;
 }
 .single-menu {
   padding: 0;
@@ -38,13 +39,16 @@
 }
 
 .div-content {
-  padding: 10px;
+  padding: 15px;
+  height: 230px;
+  display: flex;
+  flex-direction: column;
 }
 
 .div-content p {
   display: -webkit-box;
   word-wrap: break-word;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow-y: hidden;
@@ -79,20 +83,20 @@
 }
 
 .btn-add {
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 10px;
 }
 
 .btn-payment {
-  width: 300px;
+  width: 400px;
   transform: translateX(-50%);
   margin-left: 50%;
 }
 
 .tag-number {
   color: #b68834;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 22px;
+  font-weight: 700;
   line-height: 2;
 }
 
@@ -102,7 +106,7 @@
 
 .card-header h6 {
   color: #b68834 !important;
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .form-control {
@@ -114,15 +118,11 @@
 }
 
 .single-menu .title-div {
-    padding-bottom: 10px !important;
+  padding-bottom: 10px !important;
 }
 
 .single-menu img {
-  height: 134.84px;
-  width: 200px;
+  height: 200px;
+  width: 300px;
   object-fit: cover;
-}
-#products {
-    height: 650px;
-    overflow-y: auto;
 }

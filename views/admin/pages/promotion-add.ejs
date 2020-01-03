@@ -1,9 +1,9 @@
-<link href="css/product.css" rel="stylesheet">
+<link href="css/promotion.css" rel="stylesheet">
 
 <!-- /.container-fluid -->
 
-<h1 class="h3 mb-4 text-gray-800"><a href="/product"><i class="fas fa-arrow-left"></i></a> Thêm sản phẩm</h1>
-  <%- include('../elements/product-form.ejs', {product: null}); %>
+<h1 class="h3 mb-4 text-gray-800"><a href="/promotion"><i class="fas fa-arrow-left"></i></a> Thêm khuyến mãi</h1>
+  <%- include('../elements/promotion-form.ejs', {promotion: null}); %>
 
   <script type="text/javascript">
   
@@ -15,22 +15,21 @@
     }
 
     const name = $("#name").val();
-    const price = $("#price").val();
-    const description = $("#description").val();
-    const idTypeProduct = $("#idTypeProduct").val();
-    const idOrigin = $("#idOrigin").val();
-    const img = $("#img").val();
+    const discount = $("#discount").val();
+    const minScore = $("#minScore").val();
+    const dateFrom = $("#dateFrom").val();
+    const dateTo = $("#dateTo").val();
     
-    const product = { name, price, description, idTypeProduct, idOrigin, img }
+    const promotion = { name, discount, minScore, dateFrom, dateTo}
 
-    // console.log("submit: ", product);s
+    // console.log("submit: ", promotion);s
 
     const modal = $('#inforModal');
 
     $.ajax({
-      url: "/product-add",
+      url: "/promotion-add",
       type: "post",
-      data: JSON.stringify(product),
+      data: JSON.stringify(promotion),
       contentType: "application/json; charset=utf-8",
       dataType: "json"
     })
