@@ -16,6 +16,11 @@ router.get('/bill-detail', billController.detail);
 
 router.get('/staff', staffController.list);
 router.get('/staff-detail', staffController.detail);
+router.get('/staff-add',staffController.getPageAdd);
+router.post('/staff-add',staffController.add);
+router.delete('/staff-delete',staffController.delete);
+router.get('/staff-edit',staffController.getPageEdit);
+router.put('/staff-edit',staffController.update);
 
 router.get('/statistic', statisticController.list);
 

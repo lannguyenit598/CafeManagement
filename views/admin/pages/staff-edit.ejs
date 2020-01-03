@@ -1,0 +1,49 @@
+<link href="css/staff.css" rel="stylesheet">
+<link href="css/product.css" rel="stylesheet">  
+<!-- /.container-fluid -->
+
+<h1 class="h3 mb-4 text-gray-800"><a href="/staff"><i class="fas fa-arrow-left"></i></a> Thêm Nhân Viên Mới</h1>
+<%- include('../elements/staff-form.ejs', {staff: staff}); %>
+
+<script type="text/javascript">
+
+
+    const handleSubmit = () => {
+        if (!validateForm()) {
+            console.log("on validate")
+            return;
+        }
+
+        const name = $("#name").val();
+        const phone = $("#phone").val();
+        const address = $("#address").val();
+        const email = $("#email").val();
+        const password = $("#password").val();
+        const id = "<%= staff._id%>"
+
+        const staff = { name, phone, address, email, password,id }
+
+        const modal = $('#inforModal');
+        $.ajax({
+            url: "/staff-edit",
+            type: "put",
+            data: JSON.stringify(staff),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        })
+            .done(function (result) {
+                console.log("done!", result)
+                const { isSuccess, message } = result;
+                // document.getElementById('info-modal-message').innerHTML = message;
+                // modal.modal('show');
+                location.reload()
+            })
+            .fail(function (result) {
+                console.log("err: ", result)
+                const { message } = JSON.parse(result.responseText)
+                document.getElementById('info-modal-message').innerHTML = message;
+                modal.modal('show');
+            });
+    }
+
+</script>
