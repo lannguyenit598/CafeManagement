@@ -12,7 +12,7 @@ var UserSchema = new Schema(
         email: String,
         password: String,
         typeUser: {
-            type: String,
+            type: Number,
             default: STAFF
         }
     }, 
