@@ -41,15 +41,28 @@
                 <div class="p-5">
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                  <% if(message) { %> 
+                    <div class="alert alert-danger"><%= message %></div>
+                  <%}%>
                   </div>
-                  <form class="user">
+                  <form class="user" action='/login' method="POST">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                      <% if(email) { %>
+                        <input type="email" class="form-control form-control-user" id="email" name="email"
+                        aria-describedby="emailHelp" placeholder="Nhập email..." value=<%= email %>>
+                      <% } else { %>
+                      <input type="email" class="form-control form-control-user" id="email" name="email"
                         aria-describedby="emailHelp" placeholder="Nhập email...">
+                      <%}%>
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword"
-                        placeholder="Mật khẩu">
+                      <% if(password) { %>
+                        <input type="password" class="form-control form-control-user" id="password" name="password"
+                          placeholder="Mật khẩu" value=<%= password %>>
+                      <% } else { %>
+                        <input type="password" class="form-control form-control-user" id="password" name="password"
+                          placeholder="Mật khẩu">
+                      <%}%>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
@@ -57,9 +70,9 @@
                         <label class="custom-control-label pl-4" for="customCheck">Lưu thông tin</label>
                       </div>
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
+                    <button type="submit" class="btn btn-primary btn-user btn-block">
                       Đăng nhập
-                    </a>
+                    </button>
                     <!-- <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google

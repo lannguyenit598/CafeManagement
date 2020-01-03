@@ -1,6 +1,7 @@
 
 var express = require('express');
 var router = express.Router();
+
 import adminDashboardController from "../controllers/admin/dashboard.controller";
 import billController from "../controllers/admin/bill.controller";
 import staffController from "../controllers/admin/staff.controller";
@@ -10,7 +11,8 @@ import authController from "../controllers/admin/auth.controller";
 // import importProductController from "../controllers/admin/import-product.controller";
 
 router.get('/login', authController.login);
-router.get('/', adminDashboardController.home);
+router.post('/login', authController.login_post);
+router.get('/', isLoggedIn, adminDashboardController.home);
 
 router.get('/bill', billController.list);
 router.get('/bill-detail', billController.detail);
@@ -36,4 +38,10 @@ router.put('/import-product', productController.importProduct);
 router.put('/export-product', productController.exportProduct);
 
 module.exports = router;
+
+function isLoggedIn(req, res, next) {
+   if (req.isAuthenticated())
+       return next();
+   res.redirect('/login');
+}
 

@@ -7,6 +7,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const config = require('./config/db.config');
 var mongoose = require('mongoose');
+var passport = require('passport');
+
+require('./config/passport');
 
 const expressLayouts = require("express-ejs-layouts");
 const router = require("express").Router();
@@ -27,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(passport.initialize());
 mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true,}, (err, res) => {
   if (!err) {
     console.log('Connect to databse successfully!');
