@@ -1,6 +1,6 @@
 const Staff = require('../../models/user.model')
 var ObjectId = require("mongodb").ObjectID;
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 exports.list = async (req, res, next) => {
     try {
