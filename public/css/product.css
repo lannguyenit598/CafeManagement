@@ -38,6 +38,9 @@
     color: red;
 }
 
+.product__btn--delete {
+    color: red;
+}
 
 .product__btn--delete:hover {
     cursor: pointer !important;

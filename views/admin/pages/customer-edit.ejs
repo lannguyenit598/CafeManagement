@@ -1,0 +1,52 @@
+
+<link href="css/product.css" rel="stylesheet">
+
+
+<!-- /.container-fluid -->
+
+<h1 class="h3 mb-4 text-gray-800"><a href="/customer"><i class="fas fa-arrow-left"></i></a> Chỉnh sửa khách hàng - <%= customer && customer.name %></h1>
+  <%- include('../elements/customer-form.ejs', {customer: customer}); %>
+
+  <script type="text/javascript">
+
+  const handleSubmit = () => {
+    if (!validateForm()) {
+      console.log("on validate")
+      return;
+    }
+
+    const name = $("#name").val();
+    const phone = $("#phone").val();
+    const email = $("#email").val();
+    const score = $("#score").val();
+  
+    const id = "<%= customer._id%>";
+    
+    const customer = { name, phone, email, score, id}
+
+    console.log("customer: ", customer);
+
+    const modal = $('#inforModal');
+
+    $.ajax({
+      url: "/customer-edit",
+      type: "put",
+      data: JSON.stringify(customer),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json"
+    })
+      .done(function (result) {
+        console.log("done!", result)
+        const { isSuccess, message } = result;
+        location.reload()
+      })
+      .fail(function (result) {
+        console.log("err: ", result)
+        const { message } = JSON.parse(result.responseText)
+
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      });
+  }
+
+  </script>
