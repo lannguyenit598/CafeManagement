@@ -1,0 +1,45 @@
+<link href="css/product.css" rel="stylesheet">
+
+<!-- /.container-fluid -->
+
+<h1 class="h3 mb-4 text-gray-800"><a href="/customer"><i class="fas fa-arrow-left"></i></a> Thêm khách hàng</h1>
+  <%- include('../elements/customer-form.ejs', {customer: null}); %>
+
+ <script type="text/javascript">
+  const handleSubmit = () => {
+    if (!validateForm()) {
+      console.log("on validate")
+      return;
+    }
+
+    const name = $("#name").val();
+    const phone = $("#phone").val();
+    const email = $("#email").val();
+    const score = $("#score").val();
+    const customer = { name, phone, email, score}
+
+    console.log("customer", customer)
+    const modal = $('#inforModal');
+
+    $.ajax({
+      url: "/customer-add",
+      type: "post",
+      data: JSON.stringify(customer),
+      contentType: "application/json; charset=utf-8",
+      dataType: "json"
+    })
+      .done(function (result) {
+        console.log("done!", result)
+        const { isSuccess, message } = result;
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      })
+      .fail(function (result) {
+        console.log("err: ", result)
+        const { message } = JSON.parse(result.responseText)
+        document.getElementById('info-modal-message').innerHTML = message;
+        modal.modal('show');
+      });
+    
+  }
+  </script>

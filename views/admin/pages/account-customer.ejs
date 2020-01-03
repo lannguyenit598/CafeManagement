@@ -1,0 +1,116 @@
+<link href="css/product.css" rel="stylesheet">
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Quản lý khách hàng</h1>
+
+  <div class="import-product-btn">
+    <!-- <i class="fas fa-plus"></i> -->
+    <a href="/customer-add">
+    <button type="button" class="btn btn-primary">
+      <i class="fas fa-plus-circle"></i>
+      Thêm
+    </button>
+  </a>
+  </div>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Thông tin khách hàng</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Tên khách hàng</th>
+              <th>Số điện thoại</th>
+              <th>Email</th>
+              <th>Điểm tích lũy</th>
+              <th>Xóa</th>
+              <th>Sửa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% customers.map (item => {%>
+              <tr>
+                <!-- "/Customer-detail?id=<%= item.name%>" -->
+                <td><a href="/customer-detail?id=<%= item._id%>"><%= item.name%></a></td>
+                <td><%= item.phone%></td>
+                <td><%= item.email%></td>
+                <td><%= item.score%></td>
+                <td><a href="/customer-edit?id=<%= item._id %>">Sửa</a></td>
+                <td class="product__btn--delete" onclick="confirmDeleteCustomer({id:'<%=item._id%>'})">Xóa</td
+              </tr>
+            <% })%>
+          </tbody> 
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+    id="confirmDeleteModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Xác nhận xóa</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p id="info-modal-message">Bạn có muốn xóa khách hàng này không?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
+          <button type="button" class="btn btn-secondary" onclick="deleteCustomer()">Có</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<script type="text/javascript">
+  var idCustomerDelete = null;
+  const confirmDeleteCustomer = ({id}) => {
+    const modal = $('#confirmDeleteModal');
+    modal.modal('show');
+    idCustomertDelete = id;
+  }
+
+   const deleteCustomer = () => {
+      const modal = $('#confirmDeleteModal');
+      console.log("idCustomerDelete: ", idCustomerDelete)
+
+       $.ajax({
+       url: "/customer-delete",
+       type: "delete",
+       data: JSON.stringify({id: idCustomerDelete}),
+       contentType: "application/json; charset=utf-8",
+       dataType: "json"
+     })
+       .done(function (result) {
+         console.log("done!", result)
+         const { isSuccess, message } = result;
+         location.reload();
+       })
+       .fail(function (result) {
+         console.log("err: ", result)
+         const { message } = JSON.parse(result.responseText)
+
+         const modalInfo = $('#inforModal');
+         document.getElementById('info-modal-message').innerHTML = message;
+         modalInfo.modal('show');
+       });      
+
+
+
+      modal.modal('hide');
+    }
+</script>

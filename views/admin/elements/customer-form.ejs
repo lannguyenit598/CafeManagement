@@ -1,0 +1,59 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <form id="form-customer" class="needs-validation" novalidate>
+        <div class="form-group">
+            <label  class="form-edit-product__label--required">Tên khách hàng</label>
+            <input id="name" type="text" class="form-control" placeholder="Tên khách hàng" required="true"
+                value="<%= customer && customer.name%>">
+                <small id="name-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label  class="form-edit-product__label--required">Số điện thoại</label>
+            <input id="phone" type="number" class="form-control" placeholder="Số điện thoại" required="true"
+                value="<%= customer && customer.phone%>">
+                <small id="phone-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label>Email</label>
+            <input id="email" type="text" class="form-control" placeholder="Địa chỉ Email" required="true"
+                value="<%= customer && customer.email%>">
+                <small id="email-info" class="input-info form-text text-muted"></small>
+        </div>
+        <div class="form-group">
+            <label>Điểm tích lũy</label>
+            <input id="score" type="number" class="form-control" placeholder="Nhập điểm tích lũy" required="true"
+                value="<%= customer && customer.score%>">
+                <small id="score-info" class="input-info form-text text-muted"></small>
+        </div>
+    </form>
+    <button onclick="handleSubmit()" id="btn-save" type="button" class="btn btn-primary">Lưu</button>
+
+</div>
+
+ <script type="text/javascript">
+    const clearWaringForm = () => {
+        $("#name-info").text("")
+        $("#phone-info").text("")
+    }
+
+    const validateForm = () => {
+        clearWaringForm()
+        const name = $("#name").val();
+        const phone = $("#phone").val();
+
+        if (!name) {
+            $("#name-info").text("Vui lòng nhập tên")
+            $("#name").focus()
+            return false;
+        }
+
+        if (!phone) {
+            $("#phone-info").text("Vui lòng nhập số điện thoại")
+            $("#phone").focus()
+            return false;
+        }
+        return true
+    }
+</script>

@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-// var ObjectId = require("mongodb").ObjectID;
 var Schema = mongoose.Schema;
 
 var CustomerSchema = new Schema(
@@ -7,7 +6,10 @@ var CustomerSchema = new Schema(
         name: String,
         phone: String,
         email: String,
-        score: Number
+        score: {
+            type: Number,
+            default: 0
+        },
     }, 
     {
         timestamps: true
