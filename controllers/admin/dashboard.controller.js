@@ -4,6 +4,6 @@ exports.home = (req, res, next) => {
     if(req.user.typeUser == STAFF) {
         return res.redirect("/home-staff");
     }
-    return res.render('admin/pages/dashboard', { title: 'Quản lý'});
+    return res.render('admin/pages/statistic', { title: 'Doanh Thu'});
     // res.render('admin/auth/login', { title: 'Trang chủ' });
 }

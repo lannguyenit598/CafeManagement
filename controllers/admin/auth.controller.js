@@ -36,8 +36,8 @@ exports.login_post = (req, res, next) => {
     if (passportUser) {
       // localStorage.setItem('user', passportUser);
       if(passportUser.typeUser !== STAFF) {
-        res.render('admin/pages/dashboard', { 
-          title: 'Quản lý',
+        res.render('admin/pages/statistic', { 
+          title: 'Doanh thu',
           user: passportUser
         });
       }
