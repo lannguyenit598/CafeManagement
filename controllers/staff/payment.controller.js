@@ -12,13 +12,13 @@ exports.listProduct = async (req, res, next) => {
     try {
         if(req.user.typeUser == STAFF) {
             const products = await ProductUtils.getList();
-            res.render('staff/payment', { title: 'Bán hàng', products });
+            return res.render('staff/payment', { title: 'Bán hàng', products });
         } 
         return res.redirect("/");
         
     } catch (err) {
         console.log("err: ", err.message)
-        res.status(500).render('staff/payment', { title: 'Bán hàng', products: [] });
+        return res.status(500).render('staff/payment', { title: 'Bán hàng', products: [] });
     }
 }
 
