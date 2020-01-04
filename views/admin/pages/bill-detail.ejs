@@ -53,7 +53,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng giá đơn hàng</div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800 total"><%= bills[0].idBill.total%>VND
+                <div class="h5 mb-0 font-weight-bold text-gray-800 total"><%= bills[0].idBill.total%>
                 </div>
               </div>
               <div class="col-auto">
@@ -123,7 +123,10 @@
 <script type="text/javascript">
   //parse string to VND
   const handleCurrency = (number) => {
-    return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      var n = number.split('').reverse().join("");
+    var n2 = n.replace(/\d\d\d(?!$)/g, "$&.");
+    return n2.split('').reverse().join('') + ' đ';
+    // return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
   }
 
   //parse VND to string

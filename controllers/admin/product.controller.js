@@ -7,7 +7,9 @@ const ProductUtils = require('../../utils/product.utils');
 
 exports.list = async (req, res, next) => {
     try {
-        const products = await ProductUtils.getList();
+        const products = await Product.find()
+            .populate('idOrigin')
+            .populate('idTypeProduct')
         res.render('admin/pages/product', { title: 'Quản lý sản phẩm', products });
     } catch (err) {
         console.log("err: ", err.message)
@@ -86,7 +88,9 @@ exports.update = async (req, res, next) => {
 
 exports.listProductImport = async (req, res, next) => {
     try {
-        const products = await ProductUtils.getList();
+        const products = await Product.find()
+            .populate('idOrigin')
+            .populate('idTypeProduct')
 
         res.render('admin/pages/import-product', { title: 'Quản lý nhập hàng', products });
     } catch (err) {

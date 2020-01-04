@@ -55,5 +55,19 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+        //parse string to VND
+        const handleCurrency = (number) => {
+            var n = number.split('').reverse().join("");
+            var n2 = n.replace(/\d\d\d(?!$)/g, "$&.");
+            return n2.split('').reverse().join('') + ' đ';
+        }
+
+        $(document).ready(() => {
+            $('.price').get().map(item => {
+                item.innerHTML = handleCurrency(item.innerText)
+            })
+        })
+</script>
 
 </html>

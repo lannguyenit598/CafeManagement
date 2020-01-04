@@ -279,7 +279,10 @@
 
      //parse string to VND
      const handleCurrency = (number) => {
-            return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+         var n = number.split('').reverse().join("");
+       var n2 = n.replace(/\d\d\d(?!$)/g, "$&.");
+       return n2.split('').reverse().join('') + ' đ';
+            // return parseFloat(number).toFixed(1).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
   </script>
 </body>
