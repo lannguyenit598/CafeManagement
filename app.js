@@ -2,6 +2,7 @@ import createError from "http-errors"
 import configViewEngine from "./config/viewEngine"
 
 var express = require('express');
+const favicon = require('express-favicon');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -33,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(favicon(__dirname + '/public/img/play-icon.png'));
 app.use(session({ 
   secret: 'xxxxxxxxxxxxx',
   resave: true,
