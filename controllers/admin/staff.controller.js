@@ -23,9 +23,16 @@ exports.add = async (req, res, next) => {
         const address = req.body.address;
         const email = req.body.email;
         const data = { name, phone, address, email, password };
-        const staff = new Staff(data);
-        await staff.save();
-        res.send({ isSuccess: true, message: "Thành Công!!!" });
+        const staff = await Staff.findOne({ email });
+        if (staff == null) {
+            console.log("chua ton tai ");
+            const newstaff = new Staff(data);
+            await newstaff.save();
+            res.send({ isSuccess: true, message: "Thành Công!!!" });
+        }
+        else {
+            res.send({ isSuccess: true, message: "Email đã tồn tại!!!" });
+        }
     }
     catch (err) {
         console.log("err: ", err.message);

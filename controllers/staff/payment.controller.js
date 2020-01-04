@@ -5,12 +5,17 @@ const Bill = require('../../models/bill.model')
 const BillDetail = require('../../models/bill-detail.model')
 const Product = require('../../models/product.model')
 const Promotion = require('../../models/promotion.model')
+import {STAFF} from '../../utils/constanst'
 
 exports.listProduct = async (req, res, next) => {
 
     try {
-        const products = await ProductUtils.getList();
-        res.render('staff/payment', { title: 'Bán hàng', products });
+        if(req.user.typeUser == STAFF) {
+            const products = await ProductUtils.getList();
+            res.render('staff/payment', { title: 'Bán hàng', products });
+        } 
+        return res.redirect("/");
+        
     } catch (err) {
         console.log("err: ", err.message)
         res.status(500).render('staff/payment', { title: 'Bán hàng', products: [] });
