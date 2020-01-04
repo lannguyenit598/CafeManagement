@@ -20,6 +20,7 @@ import customerController from "../controllers/admin/customer.controller";
         failureRedirect : '/login',
         failureFlash : true 
     }));
+    router.get('/logout', authController.logout);
     router.get('/', isLoggedIn, adminDashboardController.home);
 
     router.get('/bill', isLoggedIn, billController.list);
