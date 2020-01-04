@@ -290,7 +290,7 @@
         });
 
         const checkPhoneNumber = (string) => {
-            return string.match(/[0,9]{10}/) || string.match(/[0,9]{11}/);
+            return string.match(/\d{10}/) || string.match(/\d{11}/);
         }
 
         //handle enter button search
