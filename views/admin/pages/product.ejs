@@ -43,7 +43,7 @@
               <tr>
                 <td>
                   <%= item.name%></td>
-                <td><%= item.price%></td>
+                <td class="price"><%= item.price%></td>
                 <td><%= item.idOrigin.name%></td>
                 <td><%= item.idTypeProduct.name%></td>
                 <td><%= item.quantity%></td>
@@ -82,14 +82,16 @@
 
 </div>
 <!-- /.container-fluid -->
-
+  <script src="js/vendor/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
+
   var idProductDelete = null;
   const confirmDeleteProduct = ({id}) => {
     const modal = $('#confirmDeleteModal');
     modal.modal('show');
     idProductDelete = id;
   }
+
 
    const deleteProduct = () => {
       const modal = $('#confirmDeleteModal');

@@ -5,8 +5,17 @@
     margin-top: 5px;
 }
 
+.add-promotion-btn {
+    margin-left: 25px;
+    margin-bottom: 20px;
+}
+
 .form-edit-promotion__label--required::after {
     content: "*";
+    color: red;
+}
+
+.promotion__btn--delete {
     color: red;
 }
 
