@@ -8,7 +8,7 @@ exports.list = async (req, res, next) => {
         res.render('admin/pages/account-staff', { title: 'Quản lý nhân viên', staff });
     } catch (err) {
         console.log("err: ", err.message)
-        res.status(500).render('admin/pages/product', { title: 'Quản lý nhân viên', staff: [], isSuccess: false });
+        res.status(500).render('admin/pages/account-staff', { title: 'Quản lý nhân viên', staff: [], isSuccess: false });
     }
 }
 exports.getPageAdd = async (req, res, next) => {

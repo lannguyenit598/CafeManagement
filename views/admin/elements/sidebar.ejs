@@ -1,3 +1,4 @@
+<link href="css/sidebar.css" rel="stylesheet">
 <!-- Sidebar -->
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
@@ -25,51 +26,51 @@
     <hr class="sidebar-divider">-->
 
     <!-- Nav Item - Quản lý đơn hàng -->
-    <li class="nav-item active">
+    <li class="nav-item">
         <a class="nav-link" href="/bill">
             <i class="fas fa-shopping-cart"></i>
-            <span>Quản lý đơn hàng</span></a>
+            <span class="bill bill-add bill-detail">Quản lý đơn hàng</span></a>
     </li>
     <!-- Nav Item - Quản lý đơn hàng -->
     <li class="nav-item">
         <a class="nav-link" href="/staff">
             <i class="fas fa-fw fa-cog"></i>
-            <span>Quản lý nhân viên</span></a>
+            <span class="staff staff-edit staff-add">Quản lý nhân viên</span></a>
     </li>
 
     <!-- Nav Item - Quản lý khách hàng -->
     <li class="nav-item">
         <a class="nav-link" href="/customer">
             <i class="fas fa-users"></i>
-            <span>Quản lý khách hàng</span></a>
+            <span class="customer customer-edit customer-add">Quản lý khách hàng</span></a>
     </li>
 
     <!-- Nav Item - Quản lý khuyến mãi -->
     <li class="nav-item">
         <a class="nav-link" href="/promotion">
             <i class="fas fa-percentage"></i>
-            <span>Quản lý khuyến mãi</span></a>
+            <span class="promotion promotion-add promotion-edit">Quản lý khuyến mãi</span></a>
     </li>
 
     <!-- Nav Item - Quản lý nhập hàng -->
     <li class="nav-item">
         <a class="nav-link" href="/import-product">
             <i class="fas fa-file-import"></i>
-            <span>Quản lý nhập hàng</span></a>
+            <span class="import-product">Quản lý nhập hàng</span></a>
     </li>
 
     <!-- Nav Item - Quản lý sản phẩm -->
     <li class="nav-item">
         <a class="nav-link" href="/product">
             <i class="fas fa-fw fa-table"></i>
-            <span>Quản lý sản phẩm</span></a>
+            <span class="product product-add product-detail product-edit">Quản lý sản phẩm</span></a>
     </li>
 
     <!-- Nav Item - Thống kê -->
     <li class="nav-item">
         <a class="nav-link" href="/statistic">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Thống kê doanh thu</span></a>
+            <span class="statistic">Thống kê doanh thu</span></a>
     </li>
 
     <!-- Divider -->
@@ -82,3 +83,19 @@
 
 </ul>
 <!-- End of Sidebar -->
+<script src="js/vendor/jquery-2.2.4.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        const { pathname } = window.location 
+
+        const path = pathname.substring(1).trim(); // delete '/'
+        console.log(`window.location: *${path}*`)
+
+        const element = document.getElementsByClassName(path);
+        console.log("add class: ",  element)
+        element[0].classList.add('active-route')
+        // console.log("add class: ", document.getElementsByClassName(path).classList)
+        
+    })
+</script>
