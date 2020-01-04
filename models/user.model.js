@@ -1,7 +1,9 @@
 var mongoose = require('mongoose');
 var ObjectId = require("mongodb").ObjectID;
+var bcrypt = require('bcryptjs');
+
 var Schema = mongoose.Schema;
-import {STAFF} from '../utils/constanst'
+import {STAFF, SALT_ROUNDS} from '../utils/constanst'
 
 // staff / admin account information
 var UserSchema = new Schema(
@@ -20,5 +22,13 @@ var UserSchema = new Schema(
         timestamps: true
     }
 );
+
+UserSchema.methods.setPassword = function (password) {
+    this.passwordHash = bcrypt.hashSync(password, SALT_ROUNDS);
+};
+
+UserSchema.methods.validatePassword = function (password) {
+    return bcrypt.compareSync(password, this.password);
+};
 
 module.exports = mongoose.model('User', UserSchema);

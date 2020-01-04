@@ -7,6 +7,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const config = require('./config/db.config');
 var mongoose = require('mongoose');
+var flash    = require('connect-flash');
+var session      = require('express-session');
+var passport = require('passport');
+
+require('./config/passport')(passport);
 
 const expressLayouts = require("express-ejs-layouts");
 const router = require("express").Router();
@@ -28,6 +33,24 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({ 
+  secret: 'xxxxxxxxxxxxx',
+  resave: true,
+  saveUninitialized: true,})
+); 
+app.use(passport.initialize());
+app.use(passport.session()); 
+app.use(flash()); 
+
+app.use(function(req, res, next){
+// if there's a flash message in the session request, make it available 
+  if(res.locals !== undefined) {
+    res.locals.sessionFlash = req.session.sessionFlash;
+    delete req.session.sessionFlash;
+    next();
+  }
+});
 
 mongoose.connect(config.database, { useUnifiedTopology: true, useNewUrlParser: true , useCreateIndex: true, useFindAndModify: false}, (err, res) => {
   if (!err) {
